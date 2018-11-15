@@ -40,7 +40,7 @@ export default class HomePage extends Component{
                     <ImageBackground
                     style={styles.image}
                     blurRadius={1.5} 
-                    source={require('../images/fondo.jpg')}
+                    source={require('../images/fondo1.jpg')}
                     >
 
                     <LinearGradient
