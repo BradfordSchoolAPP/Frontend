@@ -18,20 +18,52 @@ const {width,height} = Dimensions.get('window')
 import AppNavigator from '../navigation/AppNavigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
+import AwesomeAlert from 'react-native-awesome-alerts';
+
+
 
 
 
 
 export default class HomePage extends Component{
 
-    constructor(props){
-        super(props);
-        this.state = {
+    constructor(){
+        super()
+    
+        this.state= {
+          pass:'',
+          email:'',
+          status:0,
+          showAlert: false,
         }
     }
+
+    _validate(){
+        if(this.state.pass === '' || this.state.email === ''){
+            this.showAlert()
+        }
+        else{
+            {this.props.navigation.navigate('Home')}
+        }
+    }
+
+    showAlert = () => {
+        this.setState({
+          showAlert: true
+        });
+      };
+     
+    hideAlert = () => {
+        this.setState({
+            showAlert: false
+        });
+    }
+
+
  
 
     render(){
+        const {showAlert} = this.state;
 
             return(
                 <KeyboardAvoidingView
@@ -74,6 +106,7 @@ export default class HomePage extends Component{
                                     placeholderTextColor = {'rgba(250,250,250,0.7)'}
                                     underlineColorAndroid = {'transparent'}
                                     keyboardType = 'default'
+                                    onChangeText={(value) => this.setState({email: value})}
                                 /> 
                         </View>
                         <View style={styles.form}>
@@ -85,13 +118,16 @@ export default class HomePage extends Component{
                                     underlineColorAndroid = {'transparent'}
                                     secureTextEntry = {true}
                                     keyboardType = 'default'
+                                    onChangeText={(value) => this.setState({pass: value})}
                                     
                                 /> 
                         </View>
                         <View style={styles.botones}>
                             <TouchableHighlight 
                                 style={styles.login}
-                                onPress={() => this.props.navigation.navigate('login')}>
+                                //onPress={() => this.props.navigation.navigate('login')}
+                                onPress={() => this._validate()}
+                                >
                                 
                                 <Text style={styles.text}> Ingresar </Text>
                             </TouchableHighlight>
@@ -101,9 +137,31 @@ export default class HomePage extends Component{
                             </TouchableHighlight> 
                         </View>
 
+                        
+
 
                     
-                </ImageBackground> 
+                    </ImageBackground> 
+                    <AwesomeAlert
+                            show={showAlert}
+                            showProgress={false}
+                            //title="Precaución"
+                            message="Campos inválidos"
+                            closeOnTouchOutside={true}
+                            closeOnHardwareBackPress={false}
+                            //showCancelButton={true}
+                            showConfirmButton={true}
+                            cancelText="No, cancel"
+                            confirmText="Aceptar"
+                            confirmButtonColor="green"
+                            style
+                            onCancelPressed={() => {
+                                this.hideAlert();
+                            }}
+                            onConfirmPressed={() => {
+                                this.hideAlert();
+                            }}
+                            />
                 </KeyboardAvoidingView> 
                 
             )
@@ -112,6 +170,7 @@ export default class HomePage extends Component{
 }
 
 const styles = StyleSheet.create({
+
 
     container: {
         flex: 1,
