@@ -87,7 +87,7 @@ export default createDrawerNavigator(
     headerMode:'float',
     drawerOpenRoute: 'DrawerOpen',
     drawerPosition: 'left',
-    drawerBackgroundColor:'#2E4384',
+    drawerBackgroundColor:'#00796b',
     drawerWidth:200,
     contentOptions:{
       activeTintColor:'#06d0c7',
