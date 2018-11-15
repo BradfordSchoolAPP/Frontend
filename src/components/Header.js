@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 
     },
     container:{
-        backgroundColor:"#2E4384",
+        backgroundColor:"#009688",
         height:70,
         alignItems: 'center',
         paddingTop: 20,

@@ -7,7 +7,8 @@ import {
     TouchableHighlight,
     Dimensions,
     ImageBackground,
-    TextInput
+    TextInput,
+    KeyboardAvoidingView
 } from 'react-native'
 
 import { LinearGradient } from 'expo';
@@ -17,24 +18,26 @@ const {width,height} = Dimensions.get('window')
 import AppNavigator from '../navigation/AppNavigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-/*
-<TouchableHighlight 
-                    style={styles.login}
-                    onPress={() => this.props.navigation.navigate('login')}
-                    >
-                        <Text> Ingresar </Text>
-                    </TouchableHighlight>
 
-                    <TouchableHighlight style={styles.login}>
-                        <Text> Registro </Text>
-                    </TouchableHighlight>
- */ 
+
+
 
 export default class HomePage extends Component{
 
+    constructor(props){
+        super(props);
+        this.state = {
+        }
+    }
+ 
 
     render(){
-        return(
+
+            return(
+                <KeyboardAvoidingView
+                    behavior="padding"
+                    style={{flex:1}}
+                    >
                 <ImageBackground
                     style={styles.container}
                     blurRadius={1.5} 
@@ -51,46 +54,61 @@ export default class HomePage extends Component{
                             height:height,
                         }}
                     />
-                    <View>
-                        <Text style={styles.title}>Bienvenidos</Text>
-                        <Text style={styles.subtitle}>Centro de Padres Colegio Bradford</Text>
-                    </View>
-                    <View style={styles.form}>
-                        <Icon name="user" size={26} color="white" style={styles.inputIcon}/>
-                        <TextInput
-                                style={styles.input}
-                                placeholder = {'Correo electronico'}
-                                placeholderTextColor = {'rgba(250,250,250,0.7)'}
-                                underlineColorAndroid = {'transparent'}
-                                keyboardType = 'email-address'
-                            /> 
-                    </View>
-                    <View style={styles.form}>
-                        <Icon name="lock" size={26} color="white" style={styles.inputIcon}/>
-                        <TextInput
-                                style={styles.input}
-                                placeholder = {'Contraseña'}
-                                placeholderTextColor = {'rgba(250,250,250,0.7)'}
-                                underlineColorAndroid = {'transparent'}
-                                secureTextEntry ={true}
-                                keyboardType = 'visible-password'
-                            /> 
-                    </View>
-                    <View style={styles.botones}>
-                        <TouchableHighlight 
-                            style={styles.login}
-                            onPress={() => this.props.navigation.navigate('login')}>
-                            
-                            <Text style={styles.text}> Ingresar </Text>
-                        </TouchableHighlight>
 
-                        <TouchableHighlight style={styles.registro}>
-                            <Text style={styles.text}> Registro </Text>
-                        </TouchableHighlight> 
-                    </View>
-                </ImageBackground>     
-        )
-    }
+                    
+                    <KeyboardAvoidingView
+                        style={{flex:1}}
+                    >
+                        <View>
+                            <Text style={styles.title}>Bienvenidos</Text>
+                            <Text style={styles.subtitle}>Centro de Padres Colegio Bradford</Text>
+                        </View>
+
+                    </KeyboardAvoidingView>
+
+                        <View style={styles.form}>
+                            <Icon name="user" size={26} color="white" style={styles.inputIcon}/>
+                            <TextInput
+                                    style={styles.input}
+                                    placeholder = {'Correo electronico'}
+                                    placeholderTextColor = {'rgba(250,250,250,0.7)'}
+                                    underlineColorAndroid = {'transparent'}
+                                    keyboardType = 'default'
+                                /> 
+                        </View>
+                        <View style={styles.form}>
+                            <Icon name="lock" size={26} color="white" style={styles.inputIcon}/>
+                            <TextInput
+                                    style={styles.input}
+                                    placeholder = {'Contraseña'}
+                                    placeholderTextColor = {'rgba(250,250,250,0.7)'}
+                                    underlineColorAndroid = {'transparent'}
+                                    secureTextEntry = {true}
+                                    keyboardType = 'default'
+                                    
+                                /> 
+                        </View>
+                        <View style={styles.botones}>
+                            <TouchableHighlight 
+                                style={styles.login}
+                                onPress={() => this.props.navigation.navigate('login')}>
+                                
+                                <Text style={styles.text}> Ingresar </Text>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight style={styles.registro}>
+                                <Text style={styles.text}> Registro </Text>
+                            </TouchableHighlight> 
+                        </View>
+
+
+                    
+                </ImageBackground> 
+                </KeyboardAvoidingView> 
+                
+            )
+        }
+        
 }
 
 const styles = StyleSheet.create({
