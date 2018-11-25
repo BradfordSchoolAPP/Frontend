@@ -5,10 +5,14 @@ import HomeScreen from '../screens/HomeScreen';
 import CalendarScreen from '../screens/CalendarScreen';
 import MyCoursesScreen from '../screens/MyCoursesScreen';
 import BenefitsScreen from '../screens/BenefitsScreen';
-import HomePage from '../components/HomePage'
-
+import HomePage from '../components/HomePage';
+import EventsScreen from '../screens/EventsScreen';
+import Event from '../components/Event'
 import { createDrawerNavigator} from 'react-navigation';
 
+const EventStacl = createStackNavigator({
+  Event: {screen: Event},
+});
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -21,7 +25,6 @@ HomeStack.navigationOptions = {
 };
 
 
-
 const CalendarStack = createStackNavigator({
   Calendar: CalendarScreen,
 });
@@ -32,7 +35,15 @@ CalendarStack.navigationOptions = {
   }
 };
 
+const EventsStack = createStackNavigator({
+  Events: EventsScreen,
+});
 
+EventsStack.navigationOptions = {
+  navigationOptions: {
+    headerLeft: null
+  }
+};
 
 const MyCoursesStack = createStackNavigator({
   MyCourses: MyCoursesScreen,
@@ -67,6 +78,7 @@ homePageStack.navigationOptions = {
 
 
 
+
 export default createDrawerNavigator(
   {
     Home: {
@@ -74,6 +86,9 @@ export default createDrawerNavigator(
     },
     Calendar: {
       screen: CalendarScreen,
+    },
+    Events:{
+      screen: EventsScreen,
     },
     MyCourses:{
       screen: MyCoursesScreen,

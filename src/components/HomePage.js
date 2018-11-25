@@ -27,8 +27,8 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default class HomePage extends Component{
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
     
         this.state= {
           pass:'',
