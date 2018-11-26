@@ -6,6 +6,7 @@ import CalendarScreen from '../screens/CalendarScreen';
 import MyCoursesScreen from '../screens/MyCoursesScreen';
 import BenefitsScreen from '../screens/BenefitsScreen';
 import HomePage from '../components/HomePage'
+import CreateNewScreen from '../screens/CreateNewScreen'
 
 import { createDrawerNavigator} from 'react-navigation';
 
@@ -64,6 +65,15 @@ homePageStack.navigationOptions = {
   }
 };
 
+const createNewStack = createStackNavigator({
+  create:CreateNewScreen,
+});
+
+createNewStack.navigationOptions = {
+  navigationOptions: {
+    headerLeft:null
+  }
+};
 
 
 
@@ -80,6 +90,9 @@ export default createDrawerNavigator(
     },
     Benefits:{
       screen: BenefitsScreen,
+    },
+    create:{
+      screen: CreateNewScreen,
     }
   },
   {
