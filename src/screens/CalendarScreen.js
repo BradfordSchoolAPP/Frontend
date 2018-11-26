@@ -30,6 +30,7 @@ export default class CalendarScreen extends React.Component {
 
     this.state= {
       listEvent: false,
+      event:"",
       json:[
         {
           title:'Navidad',
@@ -49,25 +50,26 @@ export default class CalendarScreen extends React.Component {
   }
 
   _events(date){
-    console.log('holaaaa')
     eventsDay = this.state.json.filter(item => item.date === date)
     if(eventsDay.length != 0){
       console.log('si hay algo')
-      this.state.listEvent=true
+      this.setState({listEvent:true})
     }
     else{
       this.state.listEvent=false
       console.log('no hay nada')
+      this.setState({listEvent:false})
     }
   }
   _listEvents(){
    if(this.state.listEvent){
      console.log('hay algo que tenemos q poner')
+     return(<Text>HAY EVENTOS</Text>);
    }
    else{
      console.log('me muero')
+     return(<Text>NO HAY EVENTOS</Text>)
    }
-   return(<Text>oprkoiwdas</Text>);
   }
   static navigationOptions = ({ navigation }) => {
     return {
@@ -82,6 +84,9 @@ export default class CalendarScreen extends React.Component {
   };
 
   render(){
+    if(this.state.listEvent){
+      
+    }
     return(
       <View style={{backgroundColor:'white'}}>
           <Header {...this.props} namePage="Calendario"/> 
