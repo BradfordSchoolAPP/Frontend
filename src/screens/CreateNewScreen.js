@@ -177,7 +177,7 @@ export default class CreateNewScreen extends React.Component {
                   {this.state.photos.map((item,i) =>
                       <View key={i}>
                           <TouchableHighlight key={i}>
-                              <Image style={styles.image} source={{ uri: item.uri }} key={i}/>
+                              <Image style={styles.image} source={{ uri: item.file }} key={i}/>
                           </TouchableHighlight>
                       </View>
                   )}

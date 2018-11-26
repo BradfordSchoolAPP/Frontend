@@ -47,7 +47,6 @@ export default class Header extends Component{
 const styles = StyleSheet.create({
     icon: {
         paddingHorizontal:15,
-        paddingVertical:100,
 
     },
     container:{

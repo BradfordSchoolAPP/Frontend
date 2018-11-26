@@ -6,13 +6,15 @@ import {
     View,
     StyleSheet,
     Dimensions,
-    Image
+    Image,
+    TouchableHighlight
 } from 'react-native'
 
 
 import * as firebase from 'firebase';
 
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 const {width,height} = Dimensions.get('window')
 export default class New extends Component{
@@ -154,10 +156,23 @@ export default class New extends Component{
                 </View>
 
                 <View style={styles.dateView}>
+                   <TouchableHighlight style={styles.details}
+                   onPress={() =>{this.props.navigation.navigate('details',{
+                     data: this.props.dataJson,
+                     image: this.state.urlImages[0]
+                   } )}}>
+                        <Text style= {styles.seemore}>
+                          Ver más
+                        </Text>
+                    </TouchableHighlight>
+
                     <Text style={styles.dateText}>
                     {this.formatDate(new Date(this.props.dataJson.date))}
                     </Text>
+
+                    
                 </View>
+
 
                 <View style={styles.containerImages}>
                     <Carousel
@@ -165,8 +180,8 @@ export default class New extends Component{
                       data={this.state.urlImages}
                       renderItem={this._renderItem.bind(this)}
                       onSnapToItem={(index) => this.setState({ activeSlide: index }) }
-                      sliderWidth={width-40}
-                      itemWidth={width-40}
+                      sliderWidth={width-20}
+                      itemWidth={width-20}
                       layout={'default'}
                       firstItem={0}
                     />
@@ -183,17 +198,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
       },
       image:{
-        borderRadius:15,
-        width:width-50,
+        width:width-20,
         height: 250,
-        marginHorizontal: 5,
         resizeMode: "contain",
         alignItems: 'center',
         
       },
       containerImages:{
         flex:1,
-        width:width-50,
+        width:width-10,
         height:100,
         backgroundColor:"transparent",
         alignItems: "center",
@@ -205,7 +218,7 @@ const styles = StyleSheet.create({
         backgroundColor:"white",
         marginVertical:5,
         height:360,
-        width: width-20,
+        width: width-15,
         borderRadius:10,
         alignSelf:"center",
         alignItems:"center"
@@ -213,32 +226,39 @@ const styles = StyleSheet.create({
       },
       bodyNew:{
         backgroundColor:"transparent",
-        width:320,
+        width:width-50,
         alignSelf:"center",
-        alignContent:"center",
-        alignItems:"center"
-    
       },
       textBody:{
-        padding:10,
+        paddingTop:10,
         fontSize:15,
         fontWeight: "bold",
-        alignSelf:"center",
-        alignItems:"center",
         textAlign:"left",
-        color:"black",
+        color:"#004d40",
       },
       dateView:{
         backgroundColor:"transparent",
-        width:320,
-        alignSelf:"center",
+        width:width-50,
+        flexDirection: 'row',
+        justifyContent: "space-between",
       },
     
       dateText:{
-        color:"green",
-        textAlign:"left",
-        fontSize:12,
-        padding:10
+        color:"#424242",
+        fontSize:14,
+        marginVertical:10,
+        alignSelf:"center"
+      },
+      details:{
+        backgroundColor:"transparent",
+        marginVertical:10,
+        alignContent:"center",
+        alignItems:"center",
+      },
+      seemore:{
+        color: "#01579b",
+        textDecorationLine:"underline",
+        fontSize:14,
       }
 
 })
