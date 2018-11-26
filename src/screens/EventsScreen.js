@@ -44,7 +44,7 @@ export default class EventsScreen extends React.Component {
         },
         {
           title:'Fin semestre',
-          detail:'se acabo todo señores',
+          detail:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur efficitur ornare congue. Vivamus faucibus, urna et mattis maximus, ante lacus luctus sapien, sit amet feugiat metus tellus ac ligula. Phasellus mattis rutrum mattis. Suspendisse potenti. Nam laoreet imperdiet purus, et pulvinar dolor tincidunt id',
           place:'Universidad de Santiago',
           date:'2018-11-02',
           hour:'15:30'
@@ -137,11 +137,13 @@ export default class EventsScreen extends React.Component {
             console.log(item.title)
             return (
                   <Event 
-                  key={item.title} 
+                  key={item.title}
+                  navigation={this.props.navigation}
                   title={item.title}
                   hour={item.hour}
                   place={item.place}
-                  date={item.date} 
+                  date={item.date}
+                  detail={item.detail} 
                   dataJson={item}/>                     
             )})
           }

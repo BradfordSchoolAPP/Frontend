@@ -54,7 +54,6 @@ export default class CalendarScreen extends React.Component {
     if(eventsDay.length != 0){
       console.log('si hay algo')
       this.state.listEvent=true
-      this._listEvents()
     }
     else{
       this.state.listEvent=false
@@ -68,7 +67,7 @@ export default class CalendarScreen extends React.Component {
    else{
      console.log('me muero')
    }
-   return <Text>oprkoiwdas</Text>;
+   return(<Text>oprkoiwdas</Text>);
   }
   static navigationOptions = ({ navigation }) => {
     return {
@@ -101,7 +100,7 @@ export default class CalendarScreen extends React.Component {
                   )
               }
           />
-         <ScrollView style={styles.listEvent}>{this._listEvents}</ScrollView>
+         <ScrollView style={styles.listEvent}>{this._listEvents()}</ScrollView>
       </View>
     );
   }

@@ -11,7 +11,6 @@ import {
 import Moment from 'moment';
 import 'moment/locale/es'
 
-
 const fecha = new Date('2018-11-30');
 
 const {width,height} = Dimensions.get('window')
@@ -20,11 +19,19 @@ export default class Event extends Component{
     constructor(props){
         super(props)
     }
-
+_openDetail(){
+    this.props.navigation.navigate('DetailEvent',{
+        title: this.props.title,
+        date: this.props.date,
+        hour: this.props.hour,
+        place: this.props.place,
+        detail: this.props.detail
+    })
+}
     render(){
         Moment.locale('es')
         return(
-            <TouchableHighlight  onPress={() => this.props.navigation.navigate('Home')}>
+            <TouchableHighlight  onPress={() => this._openDetail()}>
                   <View style={styles.container}> 
                     <View style={styles.date}>
                         <View style={styles.month}>
