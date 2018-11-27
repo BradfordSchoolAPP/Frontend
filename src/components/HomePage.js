@@ -35,6 +35,7 @@ export default class HomePage extends Component{
           email:'',
           status:0,
           showAlert: false,
+          object:null
         }
     }
 
@@ -43,7 +44,13 @@ export default class HomePage extends Component{
             this.showAlert()
         }
         else{
-            {this.props.navigation.navigate('Home')}
+            this.send()
+            if(this.state.object === null){
+                console.log("aklsjasdljads")
+            }
+            else{
+                {this.props.navigation.navigate('Home')}
+            }
         }
     }
 
@@ -58,6 +65,28 @@ export default class HomePage extends Component{
             showAlert: false
         });
     }
+
+    send(){
+        fetch('http://191.115.4.254/api/v1/parents/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username:this.state.email,
+            password:this.state.pass
+        }),
+      }).then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({object:responseJson})
+                console.log(this.state.object)
+            })
+            .catch((error) => {
+                console.error(error);
+        });
+    }
+
 
 
  

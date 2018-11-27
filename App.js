@@ -70,7 +70,7 @@ const Stack= createStackNavigator(
     },
   },
   {
-    initialRouteName: 'app',
+    initialRouteName: 'home',
   }
 );
 
