@@ -2,7 +2,6 @@
 import { createStackNavigator} from 'react-navigation';
 
 import HomeScreen from '../screens/HomeScreen';
-import CalendarScreen from '../screens/CalendarScreen';
 import MyCoursesScreen from '../screens/MyCoursesScreen';
 import BenefitsScreen from '../screens/BenefitsScreen';
 import HomePage from '../components/HomePage'
@@ -32,16 +31,6 @@ const HomeStack = createStackNavigator({
 HomeStack.navigationOptions = {
   navigationOptions: {
     headerLeft:  null
-  }
-};
-
-const CalendarStack = createStackNavigator({
-  Calendar: CalendarScreen,
-});
-
-CalendarStack.navigationOptions = {
-  navigationOptions: {
-    headerLeft: null
   }
 };
 
@@ -101,9 +90,6 @@ export default createDrawerNavigator(
   {
     Home: {
       screen: HomeScreen,
-    },
-    Calendar: {
-      screen: CalendarScreen,
     },
     Events:{
       screen: EventsScreen,
