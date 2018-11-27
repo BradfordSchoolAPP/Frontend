@@ -39,17 +39,18 @@ export default class HomePage extends Component{
         }
     }
 
-    _validate(){
+    async _validate(){
         if(this.state.pass === '' || this.state.email === ''){
             this.showAlert()
         }
         else{
-            this.send()
+            await this.send()
             if(this.state.object === null){
                 console.log("aklsjasdljads")
             }
             else{
-                {this.props.navigation.navigate('Home')}
+                console.log("object:" + this.state.object)
+                
             }
         }
     }
@@ -67,7 +68,7 @@ export default class HomePage extends Component{
     }
 
     send(){
-        fetch('http://191.115.4.254/api/v1/parents/login', {
+        fetch('191.115.4.254/api/v1/parents/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -78,12 +79,18 @@ export default class HomePage extends Component{
             password:this.state.pass
         }),
       }).then((response) => response.json())
-            .then((responseJson) => {
-                this.setState({object:responseJson})
-                console.log(this.state.object)
-            })
-            .catch((error) => {
-                console.error(error);
+        .then((responseJson) => {
+            if(responseJson === null){
+                console.log("es null")
+            }
+            else{
+                console.log("no es null")
+                console.log(responseJson)
+                {this.props.navigation.navigate('Home')}
+            }
+        })
+        .catch((error) => {
+            console.error(error);
         });
     }
 
@@ -131,7 +138,7 @@ export default class HomePage extends Component{
                             <Icon name="user" size={26} color="white" style={styles.inputIcon}/>
                             <TextInput
                                     style={styles.input}
-                                    placeholder = {'Correo electronico'}
+                                    placeholder = {'Nombre de usuario'}
                                     placeholderTextColor = {'rgba(250,250,250,0.7)'}
                                     underlineColorAndroid = {'transparent'}
                                     keyboardType = 'default'
@@ -190,7 +197,7 @@ export default class HomePage extends Component{
                             onConfirmPressed={() => {
                                 this.hideAlert();
                             }}
-                            />
+                    />
                 </KeyboardAvoidingView> 
                 
             )
