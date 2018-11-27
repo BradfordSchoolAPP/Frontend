@@ -45,13 +45,6 @@ export default class HomePage extends Component{
         }
         else{
             await this.send()
-            if(this.state.object === null){
-                console.log("aklsjasdljads")
-            }
-            else{
-                console.log("object:" + this.state.object)
-                
-            }
         }
     }
 
@@ -68,30 +61,36 @@ export default class HomePage extends Component{
     }
 
     send(){
-        fetch('191.115.4.254/api/v1/parents/login', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            username:this.state.email,
-            password:this.state.pass
-        }),
-      }).then((response) => response.json())
-        .then((responseJson) => {
-            if(responseJson === null){
-                console.log("es null")
-            }
-            else{
-                console.log("no es null")
-                console.log(responseJson)
-                {this.props.navigation.navigate('Home')}
-            }
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+        try{
+            fetch('http://191.115.4.254/api/v1/parents/login', {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username:this.state.email,
+                    password:this.state.pass
+                }),
+              }).then((response) => response.json())
+                .then((responseJson) => {
+                    if(responseJson.length === 0 ){
+                        console.log("es null")
+                    }
+                    else{
+                        console.log("no es null")
+                        console.log(responseJson)
+                        {this.props.navigation.navigate('Home')}
+                    }
+                })
+                .catch((error) => {
+                    console.log("no hay conexion")
+                });
+        }
+        catch(error){
+            
+        }
+        
     }
 
 

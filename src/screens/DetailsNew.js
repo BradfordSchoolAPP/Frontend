@@ -11,6 +11,21 @@ constructor(props) {
     super(props);
 }   
 
+formatDate(date) {
+    var monthNames = [
+      "Enero", "Febrero", "Marzo",
+      "Abril", "Mayo", "Junio", "Julio",
+      "Agosto", "Septiembre", "Octubre",
+      "Noviembre", "Diciembre"
+    ];
+  
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+  
+    return day + ' de ' + monthNames[monthIndex] + ' ' + year;
+  }
+
   render(){
     const { navigation } = this.props;
     const data = navigation.getParam('data', 'some default value');
@@ -51,7 +66,7 @@ constructor(props) {
                         color= "grey"
                         size={20} 
                     />
-                    <Text style={styles.dateText}> {data.date}</Text>
+                    <Text style={styles.dateText}> {this.formatDate(new Date(data.date))}</Text>
                 </View>
                 
                 <View style={styles.detailsView}>
@@ -98,7 +113,7 @@ const styles = StyleSheet.create({
     paddingLeft:20,
     flexDirection: 'row',
     justifyContent: "space-between",
-    width:120
+    width:200
   },
   detailsView:{
       width:width-20,
@@ -108,7 +123,7 @@ const styles = StyleSheet.create({
   detailsText:{
       fontSize:16,
       textAlign: "justify",
-      color: "grey"
+      color: "#424242"
 
   },
   icon: {

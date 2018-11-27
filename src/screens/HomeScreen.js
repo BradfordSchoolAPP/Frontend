@@ -35,7 +35,7 @@ export default class HomeScreen extends React.Component {
     this.state = {
       url:null,
       detailsOpen:false,
-      json:[
+      /*json:[
         {
           img_num:3,
           img_dir:'1540831229393',
@@ -49,17 +49,17 @@ export default class HomeScreen extends React.Component {
           title:'ALUMNOS LÍDERES DE VOLANDO EN V PARTICIPAN DE IMPORTANTE ENCUENTRO INTERESCOLAR',
           date:' 8 nov 2018',
           details: 'detalles de la noticia'
-        }],
-        /*json:[],*/
+        }],*/
+        json:[],
 
       
     }
   }
 
-  /*
+  
   componentDidMount() {
     
-    return fetch('http://191.115.226.55/api/v1/news')
+    return fetch('http://191.115.4.254/api/v1/news')
     .then( (response) => response.json() )
     .then( (responseJson ) => {
       this.setState({
@@ -71,7 +71,7 @@ export default class HomeScreen extends React.Component {
       console.log(error)
     });
   }
-  */
+  
 
   backNew = (callback) => {
     callback.then((photos) => {

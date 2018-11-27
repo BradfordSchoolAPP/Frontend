@@ -51,7 +51,7 @@ export default class CreateNewScreen extends React.Component {
   }
 
   send(){
-    fetch('http://191.115.226.55/api/v1/news', {
+    fetch('http://191.115.4.254/api/v1/news', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
