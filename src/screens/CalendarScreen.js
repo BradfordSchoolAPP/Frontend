@@ -30,7 +30,6 @@ export default class CalendarScreen extends React.Component {
 
     this.state= {
       listEvent: false,
-      event:"",
       json:[
         {
           title:'Navidad',
@@ -56,19 +55,30 @@ export default class CalendarScreen extends React.Component {
       this.setState({listEvent:true})
     }
     else{
-      this.state.listEvent=false
-      console.log('no hay nada')
+      console.log('no hay nada hahah')
       this.setState({listEvent:false})
     }
   }
   _listEvents(){
    if(this.state.listEvent){
-     console.log('hay algo que tenemos q poner')
-     return(<Text>HAY EVENTOS</Text>);
-   }
+     console.log(eventsDay)
+     eventsDay.map((item) => {
+      console.log(item.title)
+      return (
+        <Event 
+        key={item.title}
+        navigation={this.props.navigation}
+        title={item.title}
+        hour={item.hour}
+        place={item.place}
+        date={item.date}
+        detail={item.detail} 
+        dataJson={item}/>                     
+      )})
+    }
+  
    else{
-     console.log('me muero')
-     return(<Text>NO HAY EVENTOS</Text>)
+     return(<Text style={styles.text}>No hay eventos para este día</Text>)
    }
   }
   static navigationOptions = ({ navigation }) => {
@@ -84,9 +94,6 @@ export default class CalendarScreen extends React.Component {
   };
 
   render(){
-    if(this.state.listEvent){
-      
-    }
     return(
       <View style={{backgroundColor:'white'}}>
           <Header {...this.props} namePage="Calendario"/> 
@@ -120,7 +127,14 @@ const styles = StyleSheet.create({
   },
   listEvent:{
     marginTop:20,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     height: height*0.3
   },
+  text:{
+    color:'#878787',
+    fontSize:24,
+    paddingTop:10,
+    marginHorizontal:15,
+    left:27,
+},
 })
