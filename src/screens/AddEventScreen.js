@@ -42,7 +42,7 @@ export default class AddEventScreen extends React.Component {
         }
     }
       send(){
-        fetch('191.115.4.254/api/v1/events', {
+        fetch('http://191.115.199.185/api/v1/events', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -116,12 +116,12 @@ export default class AddEventScreen extends React.Component {
                         onContentSizeChange={(event) => {
                             this.setState({ heightAux: event.nativeEvent.contentSize.heightAux })
                         }}
-                        style={[styles.input, {height: Math.max(35, this.state.heightAux)},{color:'#006C61',fontSize:24}]}
+                        style={[styles.input, {height: Math.max(35, this.state.heightAux)},{color:'#0c6653',fontSize:24}]}
                     /> 
                 </View>
                 <View style={styles.form}>
                     <View style={{flexDirection: 'row',alignContent:'space-between'}}>
-                        <Icon name="calendar" size={26} color="gray" style={styles.icon}/>
+                        <Icon name="calendar" size={26} color="grey" style={styles.icon}/>
                         <DatePicker
                             style={{width: 160}}
                             date={this.state.date}
@@ -295,7 +295,7 @@ input:{
     left:-10,
    },
    bottom: {
-    backgroundColor: "#009688",
+    backgroundColor: "#29a184",
     width: width*0.75,
     height: 45,
     borderColor: "transparent",

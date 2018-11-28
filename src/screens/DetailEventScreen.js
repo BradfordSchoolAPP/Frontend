@@ -30,6 +30,23 @@ export default class DetailEvent extends React.Component {
             showAlert: false
         });
     } 
+
+    delete(){
+        console.log("si llamo al metodo delete")
+        console.log("asdlkasdjds" + this.props.navigation.getParam('id'))
+        fetch('http://191.115.199.185/api/v1/events', {
+        method: 'delete',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id:{$oid: "5bfefeee152b0c04fce7345a"}
+        }),
+      });
+    }
+
+
   render(){
     Moment.locale('es')
     const {showAlert} = this.state;
@@ -56,7 +73,7 @@ export default class DetailEvent extends React.Component {
             <View style={{ alignContent: 'center',alignItems:'center'}}>
                 <Text style={styles.textTitle}>{this.props.navigation.getParam('title', 'No existe evento')}</Text>
             </View>
-            <View style={{backgroundColor:'#00AD9C',flex:1}}>
+            <View style={{backgroundColor:'#E9E9EE',flex:1}}>
                 <View style={styles.detailContainer}>
                     <View style={{ borderBottomColor: '#bbb',borderBottomWidth: StyleSheet.hairlineWidth,}}>
                         <Icon name="calendar" size={22} color="gray" style={styles.icon2}/>
@@ -75,13 +92,13 @@ export default class DetailEvent extends React.Component {
                         <Text style={styles.text2}>Detalles</Text>
                     </View>
                     <ScrollView>
-                        <Text style={styles.text2}>{this.props.navigation.getParam('detail', '...')}</Text>
+                        <Text style={styles.text2}>{this.props.navigation.getParam('details', '...')}</Text>
                     </ScrollView>
                 </View> 
                 <View style={styles.botones}>
                     <TouchableHighlight>
                         <View style={styles.boton}>
-                            <Icon name="edit" size={22} color="#009688" style={{position:'absolute',top:15,left:25}}/>
+                            <Icon name="edit" size={22} color="#0c6653" style={{position:'absolute',top:15,left:25}}/>
                             <Text style={styles.edit}>Editar</Text>
                         </View>
                     </TouchableHighlight>
@@ -113,6 +130,8 @@ export default class DetailEvent extends React.Component {
                             }}
                             onConfirmPressed={() => {
                                 this.hideAlert();
+                                this.delete();
+                                this.props.navigation.navigate('Events')
                             }}
                             />
         </View>
@@ -137,7 +156,7 @@ const styles = StyleSheet.create({
    },
 
 containerHeader:{
-    backgroundColor:"#009688",
+    backgroundColor:"#042e60",
     height:70,
     alignItems: 'center',
     paddingTop: 20,
@@ -160,7 +179,7 @@ detailContainer:{
     backgroundColor:'white',
 },
 textTitle:{
-    color:'#00AD9C',
+    color:'#0c6653',
     fontSize:34,
     alignContent:'center',
     alignItems:'center',
@@ -181,7 +200,7 @@ text2:{
     marginHorizontal:15,
 },
 edit:{
-    color:'#009688',
+    color:'#0c6653',
     fontSize:22,
     paddingTop:10,
 },

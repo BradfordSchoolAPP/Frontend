@@ -40,7 +40,8 @@ export default class CreateNewScreen extends React.Component {
       showAlert: false,
       loading: true,
       confirm: false,
-      message: ''
+      message: '',
+      fullDates:false
       
     }
   }
@@ -54,15 +55,23 @@ export default class CreateNewScreen extends React.Component {
   }
 
   async upload(){
+    if(this.state.title === '' || this.state.details === '' || this.state.photos.length === 0 ){
+      console.log("faltan campos aun")
+      this.setState({loading:false,confirm:true,message:"Existen campos vacios. Por favor, ingrese todos los cmapos."})
+      this.showAlert()
+    }
+    else{
+      this.setState({fullDates:true})
+      await this.state.photos.map((item,i) => 
+        this.uploadImages(item.file,"imagen" + i + ".jpg")
+      )
+      this.setState({loading:true, confirm:false, message:"Ingresando noticia"})
+      this.showAlert()
+      this.send()
+      setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});}, 10000);
+    } 
     
-    await this.state.photos.map((item,i) => 
-      this.uploadImages(item.file,"imagen" + i + ".jpg")
-    )
-    this.setState({loading:true, confirm:false, message:"Ingresando noticia"})
-    this.showAlert()
-    this.send()
-    setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});}, 4000);
-
+    
   }
 
   send(){
@@ -124,6 +133,15 @@ export default class CreateNewScreen extends React.Component {
           showAlert: false
       });
   }
+
+  options(){
+    if(this.state.fullDates){
+        this.props.navigation.navigate('Home')
+    }
+    else{
+        this.hideAlert()
+    }
+}
 
 
 
@@ -241,7 +259,7 @@ export default class CreateNewScreen extends React.Component {
                     {this.props.navigation.navigate('Home')}
                 }
                 onConfirmPressed={() => 
-                  {this.props.navigation.navigate('Home')}
+                  {this.options()}
                 }
             />
 
@@ -269,17 +287,17 @@ const styles = StyleSheet.create({
       input:{
         width:width*0.75,
         height:40,
-        fontSize:15,
+        fontSize:18,
         marginBottom: 10,
         paddingLeft: 10,
-        borderBottomColor: 'black',
+        borderBottomColor: 'grey',
         borderBottomWidth: 1,
         color:'black',
         maxHeight: 80
     },
     
       bottom: {
-        backgroundColor: "#009688",
+        backgroundColor: "#29a184",
         width: 130,
         height: 45,
         borderColor: "transparent",
