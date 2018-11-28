@@ -17,18 +17,28 @@ export default class AddEventScreen extends React.Component {
           details: '',
           place: '',
           date:'',
-          hour: '',
+          hour: '00:00',
           showAlert: false,
+          fullDates: false,
+          loading: true,
+          confirm: false,
+          message: '',
         }
       }
-      
-      async _validate(){
-        if(this.state.title === '' || this.state.place === '' || this.state.date === '' || this.state.hour){
-            this.imprimir()
+    
+     _validate(){
+        if(this.state.title === '' || this.state.place === '' || this.state.date === '' || this.state.hour=== ''){
+            console.log("faltan campos aun")
+            this.setState({loading:false,confirm:true,message:"Existen campos vacios. Por favor, ingrese todos los cmapos."})
             this.showAlert()
         }
         else{
-            await this.imprimir()
+            console.log("campos llenados")
+            this.setState({fullDates:true})
+            this.setState({loading:true, confirm:false, message:"Creando Evento"})
+            this.showAlert()
+            this.send()
+            setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Evento creado exitosamente"});}, 4000);
         }
     }
       send(){
@@ -65,6 +75,14 @@ export default class AddEventScreen extends React.Component {
         console.log(this.state.place)
         console.log(this.state.date)
         console.log(this.state.hour)
+    }
+    options(){
+        if(this.state.fullDates){
+            this.props.navigation.navigate('Events')
+        }
+        else{
+            this.hideAlert()
+        }
     }
       
   static navigationOptions = ({ navigation }) => {
@@ -130,7 +148,6 @@ export default class AddEventScreen extends React.Component {
                                     color: 'gray',
                                     fontSize:16,
                                 }
-                                // ... You can check the source to find the other keys.
                             }}
                             onDateChange={(date) => {this.setState({date: date})}}
                         />
@@ -206,22 +223,19 @@ export default class AddEventScreen extends React.Component {
                 </TouchableHighlight>
             </View>
             <AwesomeAlert
-                show={showAlert}
-                showProgress={false}
-                //title="Precaución"
-                message="¡Existen campos vacios!,
-                Debe llenar todos los campos."
+                show={this.state.showAlert}
+                showProgress={this.state.loading}
+                message={this.state.message}
                 closeOnTouchOutside={true}
                 closeOnHardwareBackPress={false}
-                //showCancelButton={true}
-                showConfirmButton={true}
+                showConfirmButton={this.state.confirm}
                 confirmText="Aceptar"
                 confirmButtonColor="green"
                 style
-                onConfirmPressed={() => {
-                    this.hideAlert();
-                }}
-                />            
+                onConfirmPressed={() => 
+                    {this.options()}
+                }
+            />          
         </View>
     );
   }
