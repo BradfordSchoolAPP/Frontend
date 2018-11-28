@@ -33,13 +33,13 @@ export default class EventsScreen extends React.Component {
       place: '',
       date:'',
       hour:'',
-      json:[
+      /*json:[
         {
-          title:'Navidad',
-          detail:'se celebra la navidad aki',
-          place:'Casa Javier',
+          title:'Bingo a beneficio',
+          detail:'Centro de estudiantes realiza un bingo a beneficio para compañeros',
+          place:'Diinf',
           date:'2018-12-25',
-          hour:'00:00'
+          hour:'20:00'
         },
         {
           title:'Fin semestre',
@@ -47,8 +47,23 @@ export default class EventsScreen extends React.Component {
           place:'Universidad de Santiago',
           date:'2018-11-02',
           hour:'15:30'
-        }],
+        }],*/
+        json:[],
     }
+  }
+  componentDidMount() {
+    
+    return fetch('http://191.115.199.185/api/v1/events')
+    .then( (response) => response.json() )
+    .then( (responseJson ) => {
+      this.setState({
+        json: responseJson,
+      })
+    })
+
+    .catch((error) => {
+      console.log(error)
+    });
   }
   static navigationOptions = ({ navigation }) => {
     return {
@@ -77,7 +92,7 @@ export default class EventsScreen extends React.Component {
                   hour={item.hour}
                   place={item.place}
                   date={item.date}
-                  detail={item.detail} 
+                  details={item.details} 
                   dataJson={item}/>                     
             )})
           }

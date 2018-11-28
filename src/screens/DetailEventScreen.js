@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight, View, Button,Dimensions, ScrollView,Image} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight, View, Button,Dimensions,TouchableWithoutFeedback, ScrollView,Image} from 'react-native';
 
 import Header from '../components/Header'
 import AppNavigator from '../navigation/AppNavigator'
@@ -35,14 +35,23 @@ export default class DetailEvent extends React.Component {
     const {showAlert} = this.state;
     return(
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Icon
-                    style ={styles.icon}
-                    name="chevron-left"
-                    color= "white"
-                    size={20}
-                />
-                <Text style={styles.textHeader}>Información</Text>
+            <View style={styles.containerHeader}> 
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                        const { navigate } = this.props.navigation.navigate('Events');
+                        }
+                    }>
+                        <Icon
+                            style ={styles.icon}
+                            name="angle-left"
+                            color= "white"
+                            size={20}
+                        />
+                    </TouchableWithoutFeedback>
+                        
+                    <Text style={styles.text4}>
+                        Detalle Evento
+                    </Text>                    
             </View>
             <View style={{ alignContent: 'center',alignItems:'center'}}>
                 <Text style={styles.textTitle}>{this.props.navigation.getParam('title', 'No existe evento')}</Text>
@@ -72,13 +81,13 @@ export default class DetailEvent extends React.Component {
                 <View style={styles.botones}>
                     <TouchableHighlight>
                         <View style={styles.boton}>
-                            <Icon name="edit" size={24} color="#009688" style={{position:'absolute',top:15,left:25}}/>
+                            <Icon name="edit" size={22} color="#009688" style={{position:'absolute',top:15,left:25}}/>
                             <Text style={styles.edit}>Editar</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={() => this.showAlert()}>
                         <View style={styles.boton2}>
-                            <Icon name="trash-o" size={24} color="#FF0000" style={{position:'absolute',top:15,left:25}}/>
+                            <Icon name="trash-o" size={22} color="#FF0000" style={{position:'absolute',top:15,left:25}}/>
                             <Text style={styles.delate}>Eliminar</Text>
                         </View>
                     </TouchableHighlight>
@@ -120,14 +129,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     paddingHorizontal:15,
-    paddingVertical:100,
-   },
+},
    icon2: {
     position:'absolute',
     top:15,
     left:15,
    },
-header:{
+
+containerHeader:{
     backgroundColor:"#009688",
     height:70,
     alignItems: 'center',
@@ -144,7 +153,7 @@ textHeader:{
 },
 detailContainer:{
     marginTop: 15,
-    borderRadius:15,
+    borderRadius:5,
     height:height*0.6,
     marginHorizontal: 15,
     alignContent: 'center',
@@ -167,18 +176,18 @@ text:{
 },
 text2:{
     color:'#878787',
-    fontSize:24,
+    fontSize:20,
     paddingTop:10,
     marginHorizontal:15,
 },
 edit:{
     color:'#009688',
-    fontSize:24,
+    fontSize:22,
     paddingTop:10,
 },
 delate:{
     color:'#FF0000',
-    fontSize:24,
+    fontSize:22,
     paddingTop:10,
 },
 boton:{
@@ -201,10 +210,18 @@ boton2:{
 botones:{
     backgroundColor:'white',
     flexDirection: 'row',
-    borderRadius:15,
+    borderRadius:5,
     height:height*0.08,
     alignContent: 'center',
     marginHorizontal: 15,
     marginVertical:15
+},
+text4:{
+    color:'white',
+    fontSize:18,
+    alignContent:'center',
+    alignItems:'center',
+    paddingLeft:width/2 -100,
+
 }
 })
