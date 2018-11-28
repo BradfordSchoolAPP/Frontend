@@ -11,9 +11,18 @@ import HomePage from '../components/HomePage';
 import EventsScreen from '../screens/EventsScreen';
 import Event from '../components/Event';
 import DetailEventScreen from '../screens/DetailEventScreen';
+import AddEventScreen from '../screens/AddEventScreen';
 import { createDrawerNavigator} from 'react-navigation';
-import DetailEvent from '../screens/DetailEventScreen';
 
+const AddEventStack = createStackNavigator({
+  AddEvent:AddEventScreen,
+});
+
+AddEventStack.navigationOptions = {
+ navigationOptions: {
+   headerLeft: null
+ }
+};
 
 const DetailEventStack = createStackNavigator({
   DetailEvent: {screen: DetailEventScreen},
@@ -93,6 +102,9 @@ export default createDrawerNavigator(
     },
     Events:{
       screen: EventsScreen,
+    },
+    AddEvent:{
+      screen: AddEventScreen,
     },
     MyCourses:{
       screen: MyCoursesScreen,

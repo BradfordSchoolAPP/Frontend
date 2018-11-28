@@ -33,7 +33,6 @@ export default class EventsScreen extends React.Component {
       place: '',
       date:'',
       hour:'',
-      modalVisible: false,
       json:[
         {
           title:'Navidad',
@@ -51,21 +50,13 @@ export default class EventsScreen extends React.Component {
         }],
     }
   }
-  openModal() {
-    this.setState({modalVisible:true});
-  }
-
-  closeModal() {
-    this.setState({modalVisible:false});
-  }
-
   static navigationOptions = ({ navigation }) => {
     return {
       headerleft: null,
       drawerLabel: 'Eventos',
       drawerIcon:  
       <Icon
-        name="calendar-times-o"
+        name="calendar"
         color= "white"
         size={20} 
       />
@@ -74,65 +65,8 @@ export default class EventsScreen extends React.Component {
   render(){
     return(
       <View>
-          <Modal
-              transparent
-              visible={this.state.modalVisible}
-              animationType={'slide'}
-              onRequestClose={() => this.closeModal()}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.innerContainer}>
-                <Text style={styles.textTitle}>Nuevo evento</Text>
-                <FloatingLabel 
-                  labelStyle={styles.labelInput}
-                  inputStyle={styles.input}
-                  style={styles.formInput}
-                  onChangeText={(value) => this.setState({title: value})}
-                  value = {this.state.title}
-                  >Titulo</FloatingLabel>
-                <FloatingLabel 
-                  labelStyle={styles.labelInput}
-                  inputStyle={styles.input}
-                  style={styles.formInput}
-                  onChangeText={(value) => this.setState({place: value})}
-                  value = {this.state.place}
-                  >Lugar</FloatingLabel>
-                <Text style={styles.text2}>Detalle</Text>
-                <TextInput
-                  style={styles.textArea}
-                  multiline={true}
-                  placeholder='Agregue una descripción del evento'
-                  placeholderTextColor='#878787'
-                  onChangeText={(value) => this.setState({detail: value})}
-                >          
-                </TextInput>
-                <View style={{ flexDirection: 'row'}}>
-                <Text style={styles.text2}>Hora</Text>
-                <DatePicker
-                  style={{
-                    height: 45,
-                    width: width*0.3,
-                    marginLeft: 20,
-                  }}
-                  date={this.state.hour}
-                  mode="time"
-                  showIcon={false}
-                  format="HH:mm"
-                  confirmBtnText="Confirm"
-                  minuteInterval={10}
-                  onDateChange={(time) => {this.setState({hour: time});}}
-                />
-                </View>
-                <Button
-                    onPress={() => this.closeModal()}
-                    title="Close modal"
-                >
-                </Button>
-              </View>
-            </View>
-          </Modal>
           <Header {...this.props} namePage="Eventos"/>
-          <ScrollView style={{height:height*0.82}}>
+          <ScrollView style={{height:height*0.9}}>
           {this.state.json.map((item) => {
             console.log(item.title)
             return (
@@ -148,9 +82,6 @@ export default class EventsScreen extends React.Component {
             )})
           }
           </ScrollView>
-          <TouchableHighlight style={styles.boton} onPress={() => this.openModal()}>
-            <Text style={styles.text}>Agregar evento</Text>            
-          </TouchableHighlight>
         </View>
     );
   }
@@ -161,27 +92,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5
-  },
-  boton:{
-      alignItems:'center',
-      justifyContent:'center',
-      width:width*0.8,
-      height:height*0.05,
-      backgroundColor:'#00AD9C',
-      borderRadius:10,
-      marginHorizontal:width*0.1,
-      marginVertical:height*0.01,
-  },
-  modalContainer: {
-    height:height*0.9,
-    marginVertical:height*0.05,
-    marginHorizontal:width*0.05,
-    borderRadius:30,
-    backgroundColor: 'white',
-  },
-  innerContainer: {
-    alignItems: "stretch",
-    marginTop:20,
   },
   icon:{
     position:'absolute',
@@ -207,34 +117,4 @@ const styles = StyleSheet.create({
     marginLeft:22,
     marginTop:10,
   },
-  labelInput: {
-    color: '#878787',
-    fontSize: 20,
-  },
-  formInput: {    
-    borderBottomWidth:0, 
-    marginLeft: 22,
-    borderColor: '#36485f', 
-    marginTop:10,
-        
-  },
-  input: {
-    borderWidth: 0,
-    color:'#878787',
-    fontSize:20,
-    width:width*0.8,
-    height:45,
-  },
-  textArea:{
-    marginLeft: 26,
-    borderTopWidth: 1,
-    borderColor:'#878787',
-    color:'#878787',
-    fontSize:20,
-    height:100,
-    width:width*0.8,
-    marginLeft: 22,
-    marginTop:5,
-    justifyContent: "flex-start"
-  }
 })
