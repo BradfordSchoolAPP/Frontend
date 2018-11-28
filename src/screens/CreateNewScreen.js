@@ -8,6 +8,7 @@ import ImageBrowser from '../camera/ImageBrowser';
 import Header from '../components/Header'
 import * as firebase from 'firebase';
 import { CheckBox } from 'react-native-elements'
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const {width,height} = Dimensions.get('window')
 
@@ -36,6 +37,10 @@ export default class CreateNewScreen extends React.Component {
       title:'',
       details:'',
       img_dir:'',
+      showAlert: false,
+      loading: true,
+      confirm: false,
+      message: ''
       
     }
   }
@@ -46,12 +51,22 @@ export default class CreateNewScreen extends React.Component {
 
     var ref = firebase.storage().ref().child("images/"+ this.state.img_dir +"/" + name);
     return ref.put(blob);
+  }
 
+  async upload(){
+    
+    await this.state.photos.map((item,i) => 
+      this.uploadImages(item.file,"imagen" + i + ".jpg")
+    )
+    this.setState({loading:true, confirm:false, message:"Ingresando noticia"})
+    this.showAlert()
+    this.send()
+    setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});}, 4000);
 
   }
 
   send(){
-    fetch('http://191.115.4.254/api/v1/news', {
+    fetch('http://191.115.199.185/api/v1/news', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -95,6 +110,19 @@ export default class CreateNewScreen extends React.Component {
   componentWillMount(){
     date= Date.now()
     this.setState({img_dir:date})
+  }
+
+
+  showAlert = () => {
+    this.setState({
+      showAlert: true
+    });
+  };
+ 
+  hideAlert = () => {
+      this.setState({
+          showAlert: false
+      });
   }
 
 
@@ -188,7 +216,7 @@ export default class CreateNewScreen extends React.Component {
             <View style={styles.header}>
               <TouchableHighlight
                     style= {styles.bottom}
-                    onPress={() => {this.state.photos.map((item,i) => this.uploadImages(item.file,"imagen" + i + ".jpg")); this.send()} } 
+                    onPress={() => {this.upload()} } 
                 >
                     <Text style= {styles.text}>
                         Guardar noticia
@@ -196,7 +224,29 @@ export default class CreateNewScreen extends React.Component {
                 
                 </TouchableHighlight>
             </View>
+            
+            <AwesomeAlert
+                show={this.state.showAlert}
+                showProgress={this.state.loading}
+                message={this.state.message}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                //showCancelButton={true}
+                showConfirmButton={this.state.confirm}
+                cancelText="No, cancel"
+                confirmText="Aceptar"
+                confirmButtonColor="green"
+                style
+                onCancelPressed={() => 
+                    {this.props.navigation.navigate('Home')}
+                }
+                onConfirmPressed={() => 
+                  {this.props.navigation.navigate('Home')}
+                }
+            />
+
         </View>
+
     );
   }
       

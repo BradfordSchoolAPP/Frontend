@@ -35,15 +35,20 @@ export default class HomePage extends Component{
           email:'',
           status:0,
           showAlert: false,
-          object:null
+          loading: true,
+          confirm: false,
+          message: ''
         }
     }
 
     async _validate(){
         if(this.state.pass === '' || this.state.email === ''){
+            this.setState({loading:false, confirm:true, message:"Campos inválidos"})
             this.showAlert()
         }
         else{
+            this.setState({loading:true, confirm:false, message:"Ingresando"})
+            this.showAlert()
             await this.send()
         }
     }
@@ -61,37 +66,38 @@ export default class HomePage extends Component{
     }
 
     send(){
-        try{
-            fetch('http://191.115.4.254/api/v1/parents/login', {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username:this.state.email,
-                    password:this.state.pass
-                }),
-              }).then((response) => response.json())
-                .then((responseJson) => {
-                    if(responseJson.length === 0 ){
-                        console.log("es null")
-                    }
-                    else{
-                        console.log("no es null")
-                        console.log(responseJson)
-                        {this.props.navigation.navigate('Home')}
-                    }
-                })
-                .catch((error) => {
-                    console.log("no hay conexion")
-                });
-        }
-        catch(error){
-            
-        }
         
+        fetch('http://191.115.199.185/api/v1/parents/login', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email:this.state.email,
+                password:this.state.pass
+            }),
+            }).then((response) => response.json())
+            .then((responseJson) => {
+                if(responseJson.length === 0 ){
+                    console.log("es null")
+                    this.setState({loading:false, confirm:true, message:"Email o contraseña incorrecta"})
+                    this.showAlert()
+                }
+                else{
+                    console.log("no es null")
+                    console.log(responseJson)
+                    this.hideAlert()
+                    {this.props.navigation.navigate('Home')}
+                }
+            })
+            .catch((error) => {
+                console.log("no hay conexion")
+            });
     }
+
+        
+    
 
 
 
@@ -137,7 +143,7 @@ export default class HomePage extends Component{
                             <Icon name="user" size={26} color="white" style={styles.inputIcon}/>
                             <TextInput
                                     style={styles.input}
-                                    placeholder = {'Nombre de usuario'}
+                                    placeholder = {'Correo electronico'}
                                     placeholderTextColor = {'rgba(250,250,250,0.7)'}
                                     underlineColorAndroid = {'transparent'}
                                     keyboardType = 'default'
@@ -179,13 +185,12 @@ export default class HomePage extends Component{
                     </ImageBackground> 
                     <AwesomeAlert
                             show={showAlert}
-                            showProgress={false}
-                            //title="Precaución"
-                            message="Campos inválidos"
+                            showProgress={this.state.loading}
+                            message={this.state.message}
                             closeOnTouchOutside={true}
                             closeOnHardwareBackPress={false}
                             //showCancelButton={true}
-                            showConfirmButton={true}
+                            showConfirmButton={this.state.confirm}
                             cancelText="No, cancel"
                             confirmText="Aceptar"
                             confirmButtonColor="green"
