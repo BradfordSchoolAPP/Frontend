@@ -4,6 +4,11 @@ import { createStackNavigator} from 'react-navigation';
 import HomeScreen from '../screens/HomeScreen';
 import MyCoursesScreen from '../screens/MyCoursesScreen';
 import BenefitsScreen from '../screens/BenefitsScreen';
+import HomePage from '../components/HomePage';
+import EventsScreen from '../screens/EventsScreen';
+import Event from '../components/Event';
+import DetailEventScreen from '../screens/DetailEventScreen';
+import AddEventScreen from '../screens/AddEventScreen';
 import HomePage from '../components/HomePage'
 import CreateNewScreen from '../screens/CreateNewScreen'
 
@@ -83,15 +88,6 @@ homePageStack.navigationOptions = {
   }
 };
 
-const createNewStack = createStackNavigator({
-  create:CreateNewScreen,
-});
-
-createNewStack.navigationOptions = {
-  navigationOptions: {
-    headerLeft:null
-  }
-};
 
 
 
@@ -111,10 +107,6 @@ export default createDrawerNavigator(
     },
     Benefits:{
       screen: BenefitsScreen,
-    },
-    },
-    create:{
-      screen: CreateNewScreen,
     }
   },
   {
