@@ -9,14 +9,8 @@ import EventsScreen from '../screens/EventsScreen';
 import Event from '../components/Event';
 import DetailEventScreen from '../screens/DetailEventScreen';
 import AddEventScreen from '../screens/AddEventScreen';
-import HomePage from '../components/HomePage'
 import CreateNewScreen from '../screens/CreateNewScreen'
 
-import HomePage from '../components/HomePage';
-import EventsScreen from '../screens/EventsScreen';
-import Event from '../components/Event';
-import DetailEventScreen from '../screens/DetailEventScreen';
-import AddEventScreen from '../screens/AddEventScreen';
 import { createDrawerNavigator} from 'react-navigation';
 
 const AddEventStack = createStackNavigator({
@@ -88,6 +82,16 @@ homePageStack.navigationOptions = {
   }
 };
 
+const createNewStack = createStackNavigator({
+  create:CreateNewScreen,
+});
+
+createNewStack.navigationOptions = {
+  navigationOptions: {
+    headerLeft:null
+  }
+};
+
 
 
 
@@ -99,22 +103,26 @@ export default createDrawerNavigator(
     Events:{
       screen: EventsScreen,
     },
-    AddEvent:{
-      screen: AddEventScreen,
-    },
+   
     MyCourses:{
       screen: MyCoursesScreen,
     },
     Benefits:{
       screen: BenefitsScreen,
-    }
+    },
+    create:{
+      screen: CreateNewScreen,
+    },
+    AddEvent:{
+      screen: AddEventScreen,
+    },
   },
   {
     initialRouteName: 'Home',
     headerMode:'float',
     drawerOpenRoute: 'DrawerOpen',
     drawerPosition: 'left',
-    drawerBackgroundColor:'#00796b',
+    drawerBackgroundColor:'#042e60',
     drawerWidth:200,
     contentOptions:{
       activeTintColor:'#06d0c7',

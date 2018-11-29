@@ -93,6 +93,7 @@ export default class HomePage extends Component{
             })
             .catch((error) => {
                 console.log("no hay conexion")
+                
             });
     }
 
@@ -196,7 +197,7 @@ export default class HomePage extends Component{
                             confirmButtonColor="green"
                             style
                             onCancelPressed={() => {
-                                this.hideAlert();
+                                
                             }}
                             onConfirmPressed={() => {
                                 this.hideAlert();
@@ -223,10 +224,10 @@ const styles = StyleSheet.create({
         marginBottom:-10,
     },
     title: {
-        color:'#298359',
-        textShadowColor:'#171717',
+        color:'green',
+        textShadowColor:'black',
         textShadowOffset: {width: 0.5, height: 0.5},
-        textShadowRadius:0.5,
+        textShadowRadius:0.8,
         fontSize:52,
         textAlign:"center",
         fontWeight:"bold",

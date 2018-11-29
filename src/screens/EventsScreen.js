@@ -29,7 +29,7 @@ export default class EventsScreen extends React.Component {
 
     this.state= {
       title:'',
-      detail: '',
+      details: '',
       place: '',
       date:'',
       hour:'',
@@ -83,11 +83,12 @@ export default class EventsScreen extends React.Component {
           <Header {...this.props} namePage="Eventos"/>
           <ScrollView style={{height:height*0.9}}>
           {this.state.json.map((item) => {
-            console.log(item.title)
+            console.log(item.id)
             return (
                   <Event 
                   key={item.title}
                   navigation={this.props.navigation}
+                  id={item.id}
                   title={item.title}
                   hour={item.hour}
                   place={item.place}

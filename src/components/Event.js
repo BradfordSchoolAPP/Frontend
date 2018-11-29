@@ -21,15 +21,17 @@ export default class Event extends Component{
     }
 _openDetail(){
     this.props.navigation.navigate('DetailEvent',{
+        id: this.props.id,
         title: this.props.title,
         date: this.props.date,
         hour: this.props.hour,
         place: this.props.place,
-        detail: this.props.detail
+        details: this.props.details
     })
 }
     render(){
         Moment.locale('es')
+        console.log(this.props.id)
         return(
             <TouchableHighlight  onPress={() => this._openDetail()}>
                   <View style={styles.container}> 
@@ -82,7 +84,7 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
     },
     textTitle:{
-        color:'#00AD9C',
+        color:'#29a184',
         fontSize:24,
         alignContent:'center',
         alignItems:'center',
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
         marginHorizontal:15,
     },
     textDate:{
-        color:'#00AD9C',
+        color:'#29a184',
         fontSize: 50,
         alignItems:'center',
         alignSelf:'center',

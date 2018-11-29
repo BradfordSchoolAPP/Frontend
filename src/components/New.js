@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
       },
       textBody:{
         paddingTop:10,
-        fontSize:15,
+        fontSize:20,
         fontWeight: "bold",
         textAlign:"left",
         color:"#004d40",
