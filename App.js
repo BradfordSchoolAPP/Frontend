@@ -33,7 +33,7 @@ export default class App extends React.Component {
 
 
 
-
+//prueba release
 const Stack= createStackNavigator(
 
   {
