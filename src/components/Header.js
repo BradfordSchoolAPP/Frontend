@@ -5,10 +5,11 @@ import {
     StyleSheet,
     TouchableWithoutFeedback,
     TouchableHighlight,
+    Dimensions
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+const {width,height} = Dimensions.get('window')
 export default class Header extends Component{
 
     constructor(props) {
@@ -46,11 +47,10 @@ export default class Header extends Component{
 const styles = StyleSheet.create({
     icon: {
         paddingHorizontal:15,
-        paddingVertical:100,
 
     },
     container:{
-        backgroundColor:"#2E4384",
+        backgroundColor:"#042e60",
         height:70,
         alignItems: 'center',
         paddingTop: 20,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         fontSize:18,
         alignContent:'center',
         alignItems:'center',
-        paddingLeft:100,
+        paddingLeft:width/2 -100,
 
     }
 
