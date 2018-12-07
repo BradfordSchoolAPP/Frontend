@@ -10,6 +10,8 @@ import * as firebase from 'firebase';
 import { CheckBox } from 'react-native-elements'
 import AwesomeAlert from 'react-native-awesome-alerts';
 
+import { Permissions, Notifications } from 'expo';
+
 const {width,height} = Dimensions.get('window')
 
 export default class CreateNewScreen extends React.Component {
@@ -90,6 +92,68 @@ export default class CreateNewScreen extends React.Component {
     }),
   });
   }
+
+
+  //********************************************************************************************* */
+
+  send2(){
+    fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      to:"ExponentPushToken[bFeoebBaeTzuusGpz1CZgW]",
+      title:this.state.title,
+      data:{
+        urlImages:"https://www.bradfordschool.cl/3w/cache/shortcodes/1-720x480-e0402441a5d07755a6b57600a43a5f8b.jpg",
+        json:{
+          title:this.state.title,
+          details:this.state.details,
+          date: Date.now()
+        }
+      }
+    }),
+  });
+  }
+
+  componentWillMount(){
+    //console.log("acaaa")
+    //registerForPushNotificationsAsync();
+    this.listener = Notifications.addListener(this.listen)
+  }
+
+  componentWillUnmount(){
+      this.listener && Notifications.removeListener(this.listen)
+  }
+
+  listen = ({origin,data}) => {
+      console.log("cool data", origin, data)
+      console.log("origin: ", origin)
+      if(origin == "selected"){
+          //this.setState({loading:false, confirm:true, message:data.message})
+          //this.showAlert()
+          {this.props.navigation.navigate('details',{
+                  data: data.json,
+                  image: data.urlImages
+                })
+          }
+      }
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+  //*********************************************************** */
   
 
 
@@ -234,7 +298,7 @@ export default class CreateNewScreen extends React.Component {
             <View style={styles.header}>
               <TouchableHighlight
                     style= {styles.bottom}
-                    onPress={() => {this.upload()} } 
+                    onPress={() => {this.send2()} } 
                 >
                     <Text style= {styles.text}>
                         Guardar noticia

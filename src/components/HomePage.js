@@ -20,7 +20,33 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 
+import { Permissions, Notifications } from 'expo';
 
+async function registerForPushNotificationsAsync() {
+  const { status: existingStatus } = await Permissions.getAsync(
+    Permissions.NOTIFICATIONS
+  );
+  let finalStatus = existingStatus;
+
+  // only ask if permissions have not already been determined, because
+  // iOS won't necessarily prompt the user a second time.
+  if (existingStatus !== 'granted') {
+    // Android remote notification permissions are granted during the app
+    // install, so this will only ask on iOS
+    //const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    //finalStatus = status;
+  }
+
+  // Stop here if the user did not grant permissions
+  if (finalStatus !== 'granted') {
+    return;
+  }
+
+  // Get the token that uniquely identifies this device
+  let token = await Notifications.getExpoPushTokenAsync();
+
+  console.log(token)
+}
 
 
 
@@ -39,6 +65,28 @@ export default class HomePage extends Component{
           confirm: false,
           message: ''
         }
+    }
+
+    componentWillMount(){
+        console.log("acaaa")
+        registerForPushNotificationsAsync();
+        this.listener = Notifications.addListener(this.listen)
+    }
+
+    componentWillUnmount(){
+        this.listener && Notifications.removeListener(this.listen)
+    }
+
+    listen = ({origin,data}) => {
+        console.log("cool data", origin, data)
+        console.log("mensaje", data.message)
+        console.log("origin: ", origin)
+        if(origin == "selected"){
+            //this.setState({loading:false, confirm:true, message:data.message})
+            //this.showAlert()
+            {this.props.navigation.navigate('Home')}
+        }
+
     }
 
     async _validate(){
