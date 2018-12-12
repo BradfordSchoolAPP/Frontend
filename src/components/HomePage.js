@@ -22,30 +22,33 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { Permissions, Notifications } from 'expo';
 
-async function registerForPushNotificationsAsync() {
-  const { status: existingStatus } = await Permissions.getAsync(
-    Permissions.NOTIFICATIONS
-  );
-  let finalStatus = existingStatus;
-
-  // only ask if permissions have not already been determined, because
-  // iOS won't necessarily prompt the user a second time.
-  if (existingStatus !== 'granted') {
-    // Android remote notification permissions are granted during the app
-    // install, so this will only ask on iOS
-    //const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-    //finalStatus = status;
-  }
-
-  // Stop here if the user did not grant permissions
-  if (finalStatus !== 'granted') {
-    return;
-  }
-
-  // Get the token that uniquely identifies this device
-  let token = await Notifications.getExpoPushTokenAsync();
-
-  console.log(token)
+registerForPushNotificationsAsync = async () =>{
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+    
+    console.log( await Permissions.getAsync(Permissions.NOTIFICATIONS))
+    // only ask if permissions have not already been determined, because
+    // iOS won't necessarily prompt the user a second time.
+    if (existingStatus !== 'granted') {
+      // Android remote notification permissions are granted during the app
+      // install, so this will only ask on iOS
+      const { status } = await Expo.Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+ 
+    }
+  
+    // Stop here if the user did not grant permissions
+    if (finalStatus !== 'granted') {
+        return;
+    }
+  
+    // Get the token that uniquely identifies this device
+ 
+    let token = await Notifications.getExpoPushTokenAsync();
+    console.log(token)
+    
 }
 
 
@@ -84,13 +87,18 @@ export default class HomePage extends Component{
         if(origin == "selected"){
             //this.setState({loading:false, confirm:true, message:data.message})
             //this.showAlert()
-            {this.props.navigation.navigate('Home')}
+            {this.props.navigation.navigate('details',{
+                data: data.json,
+                image: data.urlImages
+            })}
+
         }
 
     }
 
+
     async _validate(){
-        if(this.state.pass === '' || this.state.email === ''){
+        /*if(this.state.pass === '' || this.state.email === ''){
             this.setState({loading:false, confirm:true, message:"Campos inválidos"})
             this.showAlert()
         }
@@ -98,7 +106,8 @@ export default class HomePage extends Component{
             this.setState({loading:true, confirm:false, message:"Ingresando"})
             this.showAlert()
             await this.send()
-        }
+        }*/
+        {this.props.navigation.navigate('Home')}
     }
 
     showAlert = () => {

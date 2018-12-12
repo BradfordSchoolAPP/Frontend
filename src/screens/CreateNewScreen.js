@@ -103,9 +103,11 @@ export default class CreateNewScreen extends React.Component {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      to:"ExponentPushToken[bFeoebBaeTzuusGpz1CZgW]",
-      title:this.state.title,
+    body: JSON.stringify([{
+      to:"ExponentPushToken[k6diucPsZYw-EELCmW7HRM]",
+      body:this.state.title,
+      title:"Noticia importante",
+      sound: 'default',
       data:{
         urlImages:"https://www.bradfordschool.cl/3w/cache/shortcodes/1-720x480-e0402441a5d07755a6b57600a43a5f8b.jpg",
         json:{
@@ -113,8 +115,23 @@ export default class CreateNewScreen extends React.Component {
           details:this.state.details,
           date: Date.now()
         }
-      }
-    }),
+      }},
+      {
+      to:"ExponentPushToken[W6EwqNAQMTIadCW5ybmn8N]",
+      body:this.state.title,
+      title:"Noticia importante",
+      sound: 'default',
+      data:{
+        urlImages:"https://www.bradfordschool.cl/3w/cache/shortcodes/1-720x480-e0402441a5d07755a6b57600a43a5f8b.jpg",
+        json:{
+          title:this.state.title,
+          details:this.state.details,
+          date: Date.now()
+        }
+      }}
+    ]
+
+    ),
   });
   }
 
