@@ -43,7 +43,8 @@ export default class CreateNewScreen extends React.Component {
       loading: true,
       confirm: false,
       message: '',
-      fullDates:false
+      fullDates:false,
+      urlImages:[],
       
     }
   }
@@ -55,6 +56,8 @@ export default class CreateNewScreen extends React.Component {
     var ref = firebase.storage().ref().child("images/"+ this.state.img_dir +"/" + name);
     return ref.put(blob);
   }
+
+
 
   async upload(){
     if(this.state.title === '' || this.state.details === '' || this.state.photos.length === 0 ){
@@ -70,14 +73,21 @@ export default class CreateNewScreen extends React.Component {
       this.setState({loading:true, confirm:false, message:"Ingresando noticia"})
       this.showAlert()
       this.send()
-      setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});}, 10000);
+      setTimeout(()=>{
+        this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});
+        this.send2();
+      }, 10000);
+
+     
+      
     } 
     
     
   }
 
   send(){
-    fetch('http://191.115.199.185/api/v1/news', {
+    console.log("primero " + this.state.img_dir)
+    fetch('http://68.183.139.254/api/v1/news/', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -97,6 +107,7 @@ export default class CreateNewScreen extends React.Component {
   //********************************************************************************************* */
 
   send2(){
+    console.log("segundo " + this.state.img_dir)
     fetch('https://exp.host/--/api/v2/push/send', {
     method: 'POST',
     headers: {
@@ -109,7 +120,7 @@ export default class CreateNewScreen extends React.Component {
       title:"Noticia importante",
       sound: 'default',
       data:{
-        urlImages:"https://www.bradfordschool.cl/3w/cache/shortcodes/1-720x480-e0402441a5d07755a6b57600a43a5f8b.jpg",
+        urlImages:this.state.img_dir,
         json:{
           title:this.state.title,
           details:this.state.details,
@@ -117,12 +128,12 @@ export default class CreateNewScreen extends React.Component {
         }
       }},
       {
-      to:"ExponentPushToken[W6EwqNAQMTIadCW5ybmn8N]",
+      to:"ExponentPushToken[YAJtPGAKJ2KO4iupZK2A1r]",//ExponentPushToken[W6EwqNAQMTIadCW5ybmn8N]
       body:this.state.title,
       title:"Noticia importante",
       sound: 'default',
       data:{
-        urlImages:"https://www.bradfordschool.cl/3w/cache/shortcodes/1-720x480-e0402441a5d07755a6b57600a43a5f8b.jpg",
+        urlImages:this.state.img_dir,
         json:{
           title:this.state.title,
           details:this.state.details,
@@ -139,6 +150,7 @@ export default class CreateNewScreen extends React.Component {
     //console.log("acaaa")
     //registerForPushNotificationsAsync();
     this.listener = Notifications.addListener(this.listen)
+    
   }
 
   componentWillUnmount(){
@@ -157,6 +169,11 @@ export default class CreateNewScreen extends React.Component {
                 })
           }
       }
+  }
+
+  componentWillMount(){
+    date= Date.now()
+    this.setState({img_dir:date})
   }
   
 
@@ -197,10 +214,7 @@ export default class CreateNewScreen extends React.Component {
     )
   }
 
-  componentWillMount(){
-    date= Date.now()
-    this.setState({img_dir:date})
-  }
+
 
 
   showAlert = () => {
@@ -315,7 +329,7 @@ export default class CreateNewScreen extends React.Component {
             <View style={styles.header}>
               <TouchableHighlight
                     style= {styles.bottom}
-                    onPress={() => {this.send2()} } 
+                    onPress={() => {this.upload()} } 
                 >
                     <Text style= {styles.text}>
                         Guardar noticia

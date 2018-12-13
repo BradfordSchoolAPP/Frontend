@@ -59,7 +59,7 @@ export default class HomeScreen extends React.Component {
   
   componentDidMount() {
     
-    return fetch('http://191.115.199.185/api/v1/news')
+    return fetch('http://68.183.139.254/api/v1/news')
     .then( (response) => response.json() )
     .then( (responseJson ) => {
       this.setState({

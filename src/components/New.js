@@ -159,7 +159,7 @@ export default class New extends Component{
                    <TouchableHighlight style={styles.details}
                    onPress={() =>{this.props.navigation.navigate('details',{
                      data: this.props.dataJson,
-                     image: this.state.urlImages[0]
+                     image: this.props.dataJson.img_dir
                    } )}}>
                         <Text style= {styles.seemore}>
                           Ver más

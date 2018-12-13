@@ -3,12 +3,18 @@ import { StyleSheet, Text,TouchableHighlight, TouchableWithoutFeedback, View, Bu
 
 import Header from '../components/Header'
 const {width,height} = Dimensions.get('window')
+import * as firebase from 'firebase';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class DetailsNew extends React.Component {
  
 constructor(props) {
     super(props);
+    this.state = {
+        img_dir:'',
+        data:null,
+        urlImages:[],
+    }
 }   
 
 formatDate(date) {
@@ -26,12 +32,28 @@ formatDate(date) {
     return day + ' de ' + monthNames[monthIndex] + ' ' + year;
   }
 
+  componentWillMount(){    
+      try{
+        const { navigation } = this.props;
+        image = navigation.getParam('image', 'some default value');
+        const imageRef = firebase.storage().ref('images/'+ image + '/imagen0.jpg')
+        imageRef.getDownloadURL().then((url) => {
+          this.setState({
+            urlImages:this.state.urlImages.concat([url])
+          })   
+        
+        });
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
+
+
   render(){
     const { navigation } = this.props;
-    const data = navigation.getParam('data', 'some default value');
-    const image = navigation.getParam('image', 'some default value');
-
-    console.log(image)
+    data = navigation.getParam('data', 'some default value');
     return(
         <View style={styles.container}>
             <View style={styles.containerHeader}> 
@@ -56,7 +78,7 @@ formatDate(date) {
 
             <ScrollView style={styles.container}>
                 
-                <Image style={styles.image} source={{ uri: image }} />
+                <Image style={styles.image} source={{ uri: this.state.urlImages[0] }} />
                 <View style={styles.containerTitle}>
                     <Text style={styles.title}> {data.title}</Text>
                 </View>
