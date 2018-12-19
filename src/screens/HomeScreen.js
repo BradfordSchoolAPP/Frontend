@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
   }
 
   
-  componentDidMount() {
+  /*componentDidMount() {
     
     return fetch('http://68.183.139.254/api/v1/news')
     .then( (response) => response.json() )
@@ -80,7 +80,7 @@ export default class HomeScreen extends React.Component {
       })
     }).catch((e) => console.log(e))
   }
-
+*/
   
 
 
@@ -93,7 +93,7 @@ export default class HomeScreen extends React.Component {
         <Header {...this.props} namePage="Noticias"/> 
 
         <ScrollView style={styles.container}>
-            {this.state.json.map((item) => {
+            {/*{this.state.json.map((item) => {
               console.log(item)
               return (
                     <New key={item.title} dataJson={item}
@@ -102,7 +102,7 @@ export default class HomeScreen extends React.Component {
                   
                   
               )
-            })}
+            })}*/}
         </ScrollView>
 
       </View>
