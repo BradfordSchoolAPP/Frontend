@@ -4,12 +4,14 @@ import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import MultiSelect from 'react-native-multiple-select';
 import AwesomeAlert from 'react-native-awesome-alerts';
-
-
 import Modal from "react-native-modal";
-
 import Header from '../components/Header'
 import { Button } from 'react-native-elements';
+
+import * as firebase from 'firebase';
+import { Permissions, Notifications } from 'expo';
+
+
 const {width,height} = Dimensions.get('window');
 
 
@@ -43,7 +45,6 @@ export default class SendAlert extends React.Component {
             title:'',
             details:'',
             receptors: '',
-            nivels: '',
             items: [
                 {
                     label: 'Todos',
@@ -52,68 +53,55 @@ export default class SendAlert extends React.Component {
                 },
                 {
                     label: 'Niveles',
-                    value:'nivels',
+                    value:'levels',
                     id:2,
                 },
             ],
-            items2: [{
-                value: 0,
-                selected: false,
-                name: 'Kinder',
-                }, {
-                value: 1,
-                selected: false,
-                name: '1ero Básico',
-                }, {
-                value: 2,
-                selected: false,
-                name: '2do Básico',
-                }, {
-                value: 3,
-                selected: false,
-                name: '3ero Básico',
-                }, {
-                value: 4,
-                selected: false,
-                name: '4to Básico',
-                }, {
-                value: 5,
-                selected: false,
-                name: '5to Básico',
-              }, {
-                value: 6,
-                selected: false,
-                name: '6to Básico',
-              }, {
-                value: 7,
-                selected: false,
-                name: '7mo Básico',
-              }, {
-                value: 8,
-                selected: false,
-                name: '8vo Básico',
-              }, {
-                value: 9,
-                selected: false,
-                name: '1ero Medio',
-              }, {
-                value: 10,
-                selected: false,
-                name: '2do Medio',
-              }, {
-                value: 11,
-                selected: false,
-                name: '3ero Medio',
-              }, {
-                value: 12,
-                selected: false,
-                name: '4to Medio',
-              },
-            ] 
+            nameLevels: [],
+            levels: [],
+            json:[
+                {
+                    value:2,
+                    celu: "k6diucPsZYw-EELCmW7HRM"
+                },
+                {
+                    value:6,
+                    celu:"TDW8TgKcumzor6eHyYjQ3E"
+                },
+                {
+                    value:12,
+                    celu:"YAJtPGAKJ2KO4iupZK2A1r"
+                },
+            ], 
         };
-        this.selectConfirm = this.selectConfirm.bind(this);
-        this.deleteItem = this.deleteItem.bind(this);
     }
+    componentDidMount() {
+        return fetch('http://68.183.139.254/api/v1/courses/years')
+        .then( (response) => response.json() )
+        .then( (responseJson ) => {
+          this.setState({
+            nameLevels: responseJson,
+          },()=>{
+                var i = 0;
+            this.state.nameLevels.map((item) => {
+                var auxLevel = {}
+                auxLevel["name"] = item
+                auxLevel["selected"] = "white"
+                auxLevel["value"] = i
+                i = i + 1
+                this.state.levels.push(auxLevel)
+            })
+          })
+          
+        })    
+        .catch((error) => {
+          console.log(error)
+        })
+        ;
+        
+    
+      }
+      
     showAlert = () => {
         this.setState({
           showAlert: true
@@ -125,12 +113,9 @@ export default class SendAlert extends React.Component {
             showAlert: false
         });
     } 
+
     options(){
         if(this.state.fullDates){
-            console.log("EXITOSO JAJA")
-            console.log(this.state.receptors)
-            console.log(this.state.title)
-            console.log(this.state.details)
             this.hideAlert()
         }
         else{
@@ -138,81 +123,162 @@ export default class SendAlert extends React.Component {
         }
     }
 
-    onChangeOptions(value){
-        this.setState({receptors:value})
-    }
-
-    _validate(){
-        console.log("**********" + this.state.receptors)
-        if(this.state.title === '' || this.state.details === '' || this.state.receptors === null || this.state.receptors === '' || this.state.receptors === undefined){
-            console.log("faltan campos aun")
+    validate(selectedLevels){
+        if(this.state.title === '' || this.state.details === '' || this.state.receptors === null || this.state.receptors === '' || this.state.receptors === undefined || (this.state.receptors === "levels" && selectedLevels.length === 0)){
             this.setState({loading:false,confirm:true,message:"Existen campos vacios. Por favor, ingrese todos los cmapos."})
             this.showAlert()
         }
         else{
-            console.log("campos llenados")
             this.setState({fullDates:true})
+            console.log("los datos son: "+ this.state.title + this.state.details + this.state.receptors)
             this.setState({loading:true, confirm:false, message:"Enviando alerta"})
             this.showAlert()
-            //this.send()
+            this.send(selectedLevels)
             setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Alerta enviada exitosamente"});}, 2000);
         }
     }
-    onSelectedItemsChange = (selectedItems) => {
-        this.setState({ selectedItems });
+    //token natalia: TDW8TgKcumzor6eHyYjQ3E
+    //token julio: k6diucPsZYw-EELCmW7HRM
+    send(selectedLevels){
+        console.log("estoy en el send")
+        fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([
+            {
+          to:"ExponentPushToken[TDW8TgKcumzor6eHyYjQ3E]",
+          body:this.state.title,
+          title:"Aviso",
+          sound: 'default',
+          data:{
+            json:{
+              title:this.state.title,
+              details:this.state.details,
+              date: Date.now()
+            }
+          }},
+        ]
+        ),
+      });
+      }
+      componentWillMount(){
+        //registerForPushNotificationsAsync();
+        this.listener = Notifications.addListener(this.listen)
+      }
+    
+      componentWillUnmount(){
+          this.listener && Notifications.removeListener(this.listen)
+      }
+    
+      listen = ({origin,data}) => {
+          console.log("cool data", origin, data)
+          console.log("origin: ", origin)
+          if(origin == "selected"){
+              //this.setState({loading:false, confirm:true, message:data.message})
+              //this.showAlert()
+              {this.props.navigation.navigate('details',{
+                      data: data.json,
+                    })
+              }
+          }
+      }
+    
+      componentWillMount(){
+        date= Date.now()
+        this.setState({img_dir:date})
+      }
+
+    deleteSelectLevels(selectedLevels){
+        selectedLevels.map((item) => {
+            this.selectedLevel(item)
+        })
     }
-    selectConfirm(list) {
-        let {selectNivel} = this.state.selectNivel;
-        for (let item of list) {
-          let index = selectNivel.findIndex(ele => ele === item);
-          if (~index) selectNivel[index].isSelected = true;
-          else continue;
+
+    cancelar(selectedLevels){
+        this.setState({modalVisible: false})
+        this.deleteSelectLevels(selectedLevels)
+    }
+
+    selectedLevel(item){
+        if(item.selected === "#DCDBDB"){
+            const newCourses = this.state.levels.slice()
+                newCourses[item.value].selected = "white"; 
+                this.setState({levels:newCourses})
         }
-        this.setState({selectNivel: selectNivel});
-      }
-      deleteItem(item) {
-        let {selectNivel} = this.state.selectNivel;
-        let index = selectNivel.findIndex(a => a === item);
-        selectNivel[index].isSelected = false;
-        this.setState({selectNivel: selectNivel});
-      }
-      _blockLevels(){
-          if(this.state.receptors === 'nivels'){
-              return(
+        else{
+                const newCourses = this.state.levels.slice()
+                newCourses[item.value].selected = "#DCDBDB"; 
+                this.setState({levels:newCourses})
+        }
+    }
+
+    blockLevels(selectedLevels){
+        if(this.state.receptors === 'levels'){
+            return(
+            <View>
                 <View style={{width:width}}>
-                <View style={styles.nivels}>
-                    <ScrollView>
-                        <TouchableHighlight style={[styles.addButton,{flexDirection: 'row'}]} onPress={() => this.setState({modalVisible: true})}>
-                            <View style={[styles.boton,{flexDirection: 'row'}]}>
-                                <Text style={[styles.text,{fontSize:14}]}>Agregar nivel</Text>
-                                <Icon name="plus" size={16} color="#0c6653" style={{left:4}}/>
-                            </View>
-                        </TouchableHighlight>
+                    <View style={styles.containerLevels}>
+                            {selectedLevels.map((item)=>{return(
+                                <TouchableHighlight underlayColor="transparent" style={styles.buttonSelectedLevel} onPress={() => this.selectedLevel(item)}>
+                                    <View style={{alignItems:'center',alignContent:'center',flexDirection: 'row'}}>
+                                        <Text style={[styles.text,{fontSize:14}]}>{item.name}</Text>
+                                        <Icon name="remove" size={16} color="gray" style={{left:4}}/>
+                                    </View>
+                                </TouchableHighlight>
+                            )})}
+                            <TouchableHighlight underlayColor="transparent" style={styles.buttonSelectedLevel} onPress={() => this.setState({modalVisible: true})}>
+                                <View style={{alignItems:'center',alignContent:'center',flexDirection: 'row'}}>
+                                    <Text style={[styles.text,{fontSize:14}]}>Agregar nivel</Text>
+                                    <Icon name="plus" size={16} color="#0c6653" style={{left:4}}/>
+                                </View>
+                            </TouchableHighlight>
+                    </View>
+                </View>
+                <Modal isVisible={this.state.modalVisible}
+                    style={styles.modalContent}>
+                    <ScrollView style={{height:height*0.65,marginTop:20}}>
+                        {this.state.levels.map((item) => {
+                            return (
+                                <TouchableHighlight underlayColor="transparent" key={item.name}
+                                     style={[styles.containerLevel,{backgroundColor:item.selected}]} 
+                                     onPress={() => this.selectedLevel(item)}
+                                    >
+                                    <Text style={styles.textLevel}>{item.name}</Text> 
+                                </TouchableHighlight>                   
+                            )
+                        })}
                     </ScrollView>
-                </View>
-                </View>
-              )
-          }
-      }
-      _selectedLevel(item){
-          console.log("====================")
-          console.log(item.name)
-          if(item.selected === true){
-              this.setState({item.selected:false})
-          }
-          else{
-                this.setState({item.selected:true})
-          }
-          console.log(item.selected)
-          console.log("=====================")
-      }
+                    <View style={styles.containerButtons}>
+                        <TouchableHighlight style={styles.button} onPress={() => this.setState({modalVisible:false})}>
+                                <Text style={[{color:"white",fontSize:18}]}>Aceptar</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style={[styles.button,{backgroundColor:"white",borderWidth:1,borderColor:"gray"}]} onPress={() => this.cancelar(selectedLevels)}>
+                                <Text style={{color:"gray", fontSize:18}}>Cancelar</Text>
+                        </TouchableHighlight>
+                    </View>  
+                </Modal>
+            </View>   
+            )
+        }
+        else{
+            this.deleteSelectLevels(selectedLevels)
+        }
+    }
+
     render() {
         const {showAlert} = this.state;
         const { selectedItems } = this.state;
+        let selectedLevels = this.state.levels.filter(item => item.selected ==="#DCDBDB");
+        console.log(selectedLevels)
+        console.log("aca esta lo que obtuve"+this.state.nameLevels)
+
         return (
             <View style={styles.container}>
                 <Header {...this.props} namePage="Enviar alerta"/> 
-                <View style={styles.formulario}>
+                <View style={{height:height*0.75,width:width,}}>
                     <View style={[styles.form, {marginTop:10}]}>
                         <TextInput
                             style={styles.input}
@@ -275,34 +341,11 @@ export default class SendAlert extends React.Component {
                             />
                         </View>
                     </View>
-                    <View style={styles.containerLevels}>{this._blockLevels()}</View>
-                    <Modal isVisible={this.state.modalVisible}
-                        style={styles.modalContent}>
-                        <ScrollView style={{height:height*0.65,marginTop:20,backgroundColor:"white"}}>
-                            {this.state.items2.map((item) => {
-                            console.log("jaj")
-                            console.log(item.selected)
-                            console.log(item.name)
-                            return (
-                                <TouchableHighlight key={item.name} style={{height:height*0.08,borderTopColor:'#ACABAB',borderTopWidth:1}} onPress={() => this._selectedLevel(item)}>
-                                    <Text style={{color:"gray", fontSize:18,marginHorizontal:20,marginVertical:17}}>{item.name}</Text> 
-                                </TouchableHighlight>                   
-                            )})
-                        }
-                        </ScrollView>
-                        <View style={styles.bottoms}>
-                            <TouchableHighlight style={[styles.bottom,{width:110,height:40}]} onPress={() => console.log("aceptado")}>
-                                    <Text style={[styles.textButton,{fontSize:18}]}>Aceptar</Text>
-                            </TouchableHighlight>
-                            <TouchableHighlight style={[styles.bottom,{width:110,height:40,backgroundColor:"white",borderWidth:1,borderColor:"gray"}]} onPress={() => this.setState({modalVisible: false})}>
-                                    <Text style={{color:"gray", fontSize:18}}>Cancelar</Text>
-                            </TouchableHighlight>
-                        </View>  
-                    </Modal>
+                    <View style={{marginTop:20,height: height*0.3}}>{this.blockLevels(selectedLevels)}</View>
                 </View>
-                <View style={styles.boton}>
-                    <TouchableHighlight style={styles.bottom} onPress={() => this._validate()}>
-                        <Text style={styles.textButton}>Enviar</Text>
+                <View style={styles.button}>
+                    <TouchableHighlight style={styles.button} onPress={() => this.validate(selectedLevels)}>
+                        <Text style={{fontSize:20,color:"white"}}>Enviar</Text>
                     </TouchableHighlight>
                 </View>
                 <AwesomeAlert
@@ -330,22 +373,54 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
       },
       containerLevels:{
-        marginTop:20,
-        height: height*0.3
-      },
-      nivels:{
         padding:15,
         marginBottom:-10,
         marginTop:10,
         marginHorizontal:width*0.1,
-        borderColor:"#29a184",
         borderWidth: 1,
         borderRadius:4,
+        borderColor:"#29a184",
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexWrap: 'wrap',
       },
-      formulario:{
-        height:height*0.75,
-        width:width,
+      containerLevel:{
+        height:height*0.08,
+        borderTopColor:'#ACABAB',
+        borderTopWidth:1
       },
+      containerButtons:{
+        flexDirection: 'row',
+        alignContent:'center',
+        alignItems:'center',
+        marginHorizontal:width*0.03, 
+        marginVertical:20,
+    },
+    button: {
+        backgroundColor: "#29a184",
+        marginHorizontal:5,
+        width: 130,
+        height: 45,
+        borderColor: "transparent",
+        borderWidth: 0,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignContent:"center",
+        alignItems:"center",
+        alignSelf:"center"
+      },
+    buttonSelectedLevel:{
+        width: width*0.32,
+        height: 30,
+        justifyContent:"center",
+        borderWidth:0.5,
+        borderColor:'gray',
+        borderRadius:10,
+        marginBottom:4,
+        marginRight:8,
+        flexDirection: 'row',
+    },
       form: {
         alignItems: "stretch",
         padding:15,
@@ -353,26 +428,6 @@ const styles = StyleSheet.create({
         marginTop:10,
         alignContent:"center",
         alignSelf:"center",
-    },
-    bottoms:{
-        flexDirection: 'row',
-        alignContent:'center',
-        alignItems:'center',
-        marginHorizontal:width*0.1, 
-        marginVertical:20,
-    },
-    boton:{
-        alignItems:'center',
-        alignContent:'center',
-    },
-    addButton:{
-        width: width*0.32,
-        height: 30,
-        justifyContent:"center",
-        borderWidth:0.5,
-        borderColor:'gray',
-        borderRadius:10,
-
     },
     input:{
         width:width*0.75,
@@ -389,6 +444,12 @@ const styles = StyleSheet.create({
         fontSize:20,
         color:'#878787',
       },
+      textLevel: {
+        color:"gray",
+        fontSize:18,
+        marginHorizontal:20,
+        marginVertical:17
+      },
       labelSelect: {
         marginTop: 5,
         marginBottom: 20,
@@ -398,19 +459,6 @@ const styles = StyleSheet.create({
         borderStyle: 'dashed',
         borderColor: '#6dc2a2'
       },
-      bottom: {
-        backgroundColor: "#29a184",
-        marginHorizontal:5,
-        width: 130,
-        height: 45,
-        borderColor: "transparent",
-        borderWidth: 0,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignContent:"center",
-        alignItems:"center",
-        alignSelf:"center"
-      },
       modalContent: {
         backgroundColor: 'white',
         borderRadius:10,
@@ -418,10 +466,6 @@ const styles = StyleSheet.create({
         marginVertical: height*0.1,
         alignItems: undefined,
         justifyContent: undefined,
-      },
-      textButton:{
-        fontSize:20,
-        color:'white',
       },
 });
 
@@ -440,6 +484,17 @@ const pickerSelectStyles = StyleSheet.create({
         borderWidth:0,
         borderBottomWidth: 1,
         padding:0,
+    },
+    inputAndroid: {
+        fontSize: 20,
+        paddingTop: 13,
+        paddingHorizontal: 10,
+        paddingBottom: 12,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 50,
+        backgroundColor: 'white',
+        color: 'black',
     },
     icon: {
         position: 'absolute',
