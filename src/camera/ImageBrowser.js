@@ -93,7 +93,7 @@ export default class ImageBrowser extends React.Component {
 
   renderHeader = () => {
     let selectedCount = Object.keys(this.state.selected).length;
-    let headerText = selectedCount + ' Selected';
+    let headerText = selectedCount + ' Seleccionado(s)';
     if (selectedCount === this.props.max) headerText = headerText + ' (Max)';
     return (
       <View style={styles.header}>
