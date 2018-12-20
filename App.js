@@ -13,6 +13,12 @@ import HomeScreen from './src/screens/HomeScreen'
 import New from './src/components/New'
 
 
+/*credentials build
+Keystore password: 75cc1bcb2bb644f0b82f442cb9ed00b3
+  Key alias:         QGp1bGlvc2VycmFuby9jZW50cm8tZGUtcGFkcmVz
+  Key password:      4e065bb5508847d4bf19567f3e12cd76
+*/
+
 export default class App extends React.Component {
 
   constructor(props) {
