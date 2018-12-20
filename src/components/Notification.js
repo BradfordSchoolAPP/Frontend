@@ -6,7 +6,8 @@ import {
     TouchableWithoutFeedback,
     TouchableHighlight,
     Dimensions,
-    Modal
+    Modal,
+    Image
 } from 'react-native'
 
 
@@ -23,6 +24,7 @@ export default class Notification extends Component{
     
       prepareCallback() {
         let callbackResult = Promise.resolve([this.props.data.title,this.props.data.details])
+        this.props.data.opened = true;
         this.props.callback(callbackResult)
       }
 
@@ -30,25 +32,20 @@ export default class Notification extends Component{
 
     render(){
         return(
-            <View style={styles.container}>
-                <TouchableHighlight onPress={() => this.prepareCallback()}>
-                    <View style={styles.container}>
-
-                        <View style={styles.icon}>
-                            <Icon
-                                name="exclamation-circle"
-                                color= "#29a184"
-                                size={40} 
-                            />
-                        </View>
-                        
-                        <View style={styles.containerText}>
-                            <Text style={[styles.textTitle , this.props.data.opened ? styles.IsOld : styles.IsNew]}>{this.props.data.title}</Text>
-                            <Text  numberOfLines={1} style={styles.textDetail}>{this.props.data.details}</Text>
-                        </View>
+            <TouchableHighlight underlayColor="transparent" onPress={() => this.prepareCallback()}>
+                <View style={styles.container}>
+                    <View style={styles.icon}>
+                        <Image  style={{height:35, width: 35,alignSelf: 'stretch'}}
+                            source={{uri:"https://img.icons8.com/ultraviolet/80/000000/urgent-message.png" }}
+                        />
                     </View>
-                </TouchableHighlight>
-            </View>
+                    
+                    <View style={styles.containerText}>
+                        <Text style={[styles.textTitle , this.props.data.opened ? styles.IsOld : styles.IsNew]}>{this.props.data.title}</Text>
+                        <Text  numberOfLines={1} style={styles.textDetail}>{this.props.data.details}</Text>
+                    </View>
+                </View>
+            </TouchableHighlight>
            
         )
     }
@@ -71,7 +68,7 @@ const styles = StyleSheet.create({
         alignContent:'center',
         alignItems:'center',
         marginHorizontal:15,
-        marginTop:7,
+        marginTop:5,
     },
     IsNew:{
         color:'black',
