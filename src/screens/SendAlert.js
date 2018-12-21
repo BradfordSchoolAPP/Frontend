@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, Text, TextInput, StyleSheet, View } from 'react-native';
-//import RNPickerSelect from 'react-native-picker-select';
+import { Alert, Text, TextInput, StyleSheet, View, Dimensions, TouchableHighlight, ScrollView } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import MultiSelect from 'react-native-multiple-select';
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -14,36 +14,6 @@ import { Permissions, Notifications } from 'expo';
 
 const {width,height} = Dimensions.get('window');
 
-const items = [{
-    id: '92iijs7yta',
-    name: 'Ondo',
-  }, {
-    id: 'a0s0a8ssbsd',
-    name: 'Ogun',
-  }, {
-    id: '16hbajsabsd',
-    name: 'Calabar',
-  }, {
-    id: 'nahs75a5sg',
-    name: 'Lagos',
-  }, {
-    id: '667atsas',
-    name: 'Maiduguri',
-  }, {
-    id: 'hsyasajs',
-    name: 'Anambra',
-  }, {
-    id: 'djsjudksjd',
-    name: 'Benue',
-  }, {
-    id: 'sdhyaysdj',
-    name: 'Kaduna',
-  }, {
-    id: 'suudydjsjd',
-    name: 'Abuja',
-  }];
-
-  
 
 export default class SendAlert extends React.Component {
     static navigationOptions = ({ navigation }) => {
@@ -65,25 +35,26 @@ export default class SendAlert extends React.Component {
         this.inputRefs = {};
 
         this.state = {
+            showAlert: false,
+            loading: true,
+            confirm: false,
+            message: '',
+            fullDates:false,
+            modalVisible:false,
             selectedItems: [],
             title:'',
             details:'',
             receptors: '',
             items: [
                 {
-                    label: 'Red',
-                    value: 'red',
+                    label: 'Todos',
+                    value:'all',
                     id:1,
                 },
                 {
                     label: 'Niveles',
                     value:'levels',
                     id:2,
-                },
-                {
-                    label: 'Blue',
-                    value: 'blue',
-                    id:3
                 },
             ],
             nameLevels: [],
@@ -298,6 +269,7 @@ export default class SendAlert extends React.Component {
     }
 
     render() {
+        const {showAlert} = this.state;
         const { selectedItems } = this.state;
         let selectedLevels = this.state.levels.filter(item => item.selected ==="#DCDBDB");
         console.log(selectedLevels)
@@ -366,6 +338,8 @@ export default class SendAlert extends React.Component {
                             ref={(el) => {
                                 this.inputRefs.picker = el;
                             }}
+
+                            useNativeAndroidPickerStyle={false}
                             />
                         </View>
                     </View>
@@ -499,23 +473,26 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
-        fontSize: 16,
-        paddingTop: 13,
+        height:26,
+        width:width*0.42,
+        fontSize: 20,
+        paddingTop: 3,
         paddingHorizontal: 10,
-        paddingBottom: 12,
-        borderWidth: 1,
-        borderColor: 'blue',
-        borderRadius: 4,
+        paddingBottom: 3,
         backgroundColor: 'white',
-        color: 'black',
+        color: '#878787',
+        marginLeft: 36,
+        borderBottomColor: 'gray',
+        borderWidth:0,
+        borderBottomWidth: 1,
+        padding:0,
     },
     inputAndroid: {
-        fontSize: 20,
-        paddingTop: 13,
+
         paddingHorizontal: 10,
         paddingBottom: 12,
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: 'transparent',
         borderRadius: 50,
         backgroundColor: 'white',
         color: 'black',
