@@ -29,9 +29,7 @@ export default class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    console.ignoredYellowBox = [
-      'Setting a timer'
-      ];
+
     this.state = {
       url:null,
       detailsOpen:false,
@@ -57,7 +55,7 @@ export default class HomeScreen extends React.Component {
   }
 
   
-  /*componentDidMount() {
+  componentDidMount() {
     
     return fetch('http://68.183.139.254/api/v1/news')
     .then( (response) => response.json() )
@@ -73,14 +71,7 @@ export default class HomeScreen extends React.Component {
   }
   
 
-  backNew = (callback) => {
-    callback.then((photos) => {
-      this.setState({
-        imageBrowserOpen: false,
-      })
-    }).catch((e) => console.log(e))
-  }
-*/
+
   
 
 
@@ -93,16 +84,14 @@ export default class HomeScreen extends React.Component {
         <Header {...this.props} namePage="Noticias"/> 
 
         <ScrollView style={styles.container}>
-            {/*{this.state.json.map((item) => {
+            {this.state.json.map((item,i) => {
               console.log(item)
               return (
-                    <New key={item.title} dataJson={item}
+                    <New key={i} dataJson={item}
                         navigation={this.props.navigation}
-                        />
-                  
-                  
+                        />   
               )
-            })}*/}
+            })}
         </ScrollView>
 
       </View>

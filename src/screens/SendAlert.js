@@ -139,31 +139,33 @@ export default class SendAlert extends React.Component {
     }
     //token natalia: TDW8TgKcumzor6eHyYjQ3E
     //token julio: k6diucPsZYw-EELCmW7HRM
-    send(selectedLevels){
-        console.log("estoy en el send")
-        fetch('https://exp.host/--/api/v2/push/send', {
+    send(selectedItems){
+        array_courses = []
+
+        selectedItems.map((item) => {
+            array_courses.push(item.name)
+        })
+
+        console.log("cursos *********************")
+        console.log(array_courses)
+    
+        fetch('http://68.183.139.254/api/v1/courses/alert', {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify([
-            {
-          to:"ExponentPushToken[TDW8TgKcumzor6eHyYjQ3E]",
-          body:this.state.title,
-          title:"Aviso",
-          sound: 'default',
-          data:{
-            json:{
-              title:this.state.title,
-              details:this.state.details,
-              date: Date.now()
-            }
-          }},
-        ]
-        ),
-      });
-      }
+        body: JSON.stringify({
+            courses: array_courses,
+            title: this.state.title,
+            details: this.state.details
+            }),
+        });
+    }
+
+    
+    /*
+
       componentWillMount(){
         //registerForPushNotificationsAsync();
         this.listener = Notifications.addListener(this.listen)
@@ -176,15 +178,22 @@ export default class SendAlert extends React.Component {
       listen = ({origin,data}) => {
           console.log("cool data", origin, data)
           console.log("origin: ", origin)
+          //console.log("type: ", data.json.type)
           if(origin == "selected"){
               //this.setState({loading:false, confirm:true, message:data.message})
               //this.showAlert()
-              {this.props.navigation.navigate('details',{
-                      data: data.json,
+                if(data.json.type === "noticia"){
+                    {this.props.navigation.navigate('details',{
+                        data: data.json,
                     })
-              }
+                    }
+                }
+                else if(data.json.type === "alerta"){
+                    {this.props.navigation.navigate('noti')}
+                }
+              
           }
-      }
+      }*/
     
       componentWillMount(){
         date= Date.now()
@@ -272,8 +281,6 @@ export default class SendAlert extends React.Component {
         const {showAlert} = this.state;
         const { selectedItems } = this.state;
         let selectedLevels = this.state.levels.filter(item => item.selected ==="#DCDBDB");
-        console.log(selectedLevels)
-        console.log("aca esta lo que obtuve"+this.state.nameLevels)
 
         return (
             <View style={styles.container}>

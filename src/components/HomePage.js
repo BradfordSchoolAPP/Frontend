@@ -82,18 +82,22 @@ export default class HomePage extends Component{
 
     listen = ({origin,data}) => {
         console.log("cool data", origin, data)
-        console.log("mensaje", data.message)
         console.log("origin: ", origin)
+        console.log("type: ", data.json.type)
         if(origin == "selected"){
             //this.setState({loading:false, confirm:true, message:data.message})
             //this.showAlert()
-            {this.props.navigation.navigate('details',{
-                data: data.json,
-                image: data.urlImages
-            })}
-
+              if(data.json.type === "noticia"){
+                  {this.props.navigation.navigate('details',{
+                      data: data.json,
+                  })
+                  }
+              }
+              else if(data.json.type === "alerta"){
+                  {this.props.navigation.navigate('noti')}
+              }
+            
         }
-
     }
 
 

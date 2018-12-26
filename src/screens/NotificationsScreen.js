@@ -42,7 +42,7 @@ export default class NotificationsScreen extends React.Component {
         message: '',
 
         alerts:[
-            {
+            /*{
             title:"Alerta 1",
             details:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
             date: "18 nov 2018",
@@ -59,11 +59,29 @@ export default class NotificationsScreen extends React.Component {
             details:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
             date: "25 nov 2018",
             opened:false,
-            }],
+            }*/],
 
       
     }
   }
+
+
+
+  componentDidMount() {
+    id_usuario=3 //id usuario actual
+    return fetch('http://68.183.139.254/api/v1/alerts/' + id_usuario)
+    .then( (response) => response.json() )
+    .then( (responseJson ) => {
+      this.setState({
+        alerts: responseJson,
+      })
+    })
+
+    .catch((error) => {
+      console.log(error)
+    });
+  }
+  
 
   Callback = (callback) => {
     callback.then((object,message) => {

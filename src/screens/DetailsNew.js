@@ -35,8 +35,8 @@ formatDate(date) {
   componentWillMount(){    
       try{
         const { navigation } = this.props;
-        image = navigation.getParam('image', 'some default value');
-        const imageRef = firebase.storage().ref('images/'+ image + '/imagen0.jpg')
+        data = navigation.getParam('data', 'some default value');
+        const imageRef = firebase.storage().ref('images/'+ data.img_dir + '/imagen0.jpg')
         imageRef.getDownloadURL().then((url) => {
           this.setState({
             urlImages:this.state.urlImages.concat([url])
@@ -45,7 +45,7 @@ formatDate(date) {
         });
       }
       catch(error){
-        console.log(error)
+        console.log("aun no se obtiene la imagen")
       }
     }
 
