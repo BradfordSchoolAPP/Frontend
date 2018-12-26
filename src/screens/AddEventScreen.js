@@ -42,7 +42,7 @@ export default class AddEventScreen extends React.Component {
         }
     }
       send(){
-        fetch('http://191.115.199.185/api/v1/events', {
+        fetch('http://68.183.139.254/api/v1/events', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

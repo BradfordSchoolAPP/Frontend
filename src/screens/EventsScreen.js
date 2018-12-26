@@ -53,7 +53,7 @@ export default class EventsScreen extends React.Component {
   }
   componentDidMount() {
     
-    return fetch('http://191.115.199.185/api/v1/events')
+    return fetch('http://68.183.139.254/api/v1/events')
     .then( (response) => response.json() )
     .then( (responseJson ) => {
       this.setState({

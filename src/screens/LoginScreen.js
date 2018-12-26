@@ -26,7 +26,7 @@ export default class LoginScreen extends React.Component {
   send(){
 
 
-    fetch('http://192.168.0.107:3000/api/v1/users/', {
+    fetch('http://68.183.139.254/api/v1/users/', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

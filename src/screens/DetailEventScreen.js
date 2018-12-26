@@ -34,7 +34,7 @@ export default class DetailEvent extends React.Component {
     delete(){
         console.log("si llamo al metodo delete")
         console.log("asdlkasdjds" + this.props.navigation.getParam('id'))
-        fetch('http://191.115.199.185/api/v1/events', {
+        fetch('http://68.183.139.254/api/v1/events', {
         method: 'delete',
         headers: {
           Accept: 'application/json',

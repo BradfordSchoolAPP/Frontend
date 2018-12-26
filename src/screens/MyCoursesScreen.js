@@ -27,7 +27,7 @@ export default class MyCoursesScreen extends React.Component {
     this.state = {
         student:'',
         modalVisible:false,
-        course: {},
+        course: {"section": "","year_course":""},
         childrens:[],
         namesChildrens: [],
         schoolmates:[],
