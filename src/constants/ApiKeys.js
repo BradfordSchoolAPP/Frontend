@@ -1,10 +1,10 @@
 export default {
 	FirebaseConfig: {
-		apiKey: "AIzaSyBn4llQGRGvTWmuoc1MSHxDFaKA14V1Y6g",
-		authDomain: "app-centro-de-padres.firebaseapp.com",
-		databaseURL: "https://app-centro-de-padres.firebaseio.com",
-		projectId: "app-centro-de-padres",
-		storageBucket: "app-centro-de-padres.appspot.com",
-		messagingSenderId: "383926491501"
+		apiKey: "AIzaSyD7-D2kCYUs8NvU3kKAP7PCUuyKjnA86Us",
+		authDomain: "app-bradfor-school.firebaseapp.com",
+		databaseURL: "https://app-bradfor-school.firebaseio.com",
+		projectId: "app-bradfor-school",
+		storageBucket: "app-bradfor-school.appspot.com",
+		messagingSenderId: "198047756550"
 	}
 }
