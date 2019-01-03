@@ -16,6 +16,8 @@ import {
 
 export default class NotificationsScreen extends React.Component {
 
+  
+
   static navigationOptions = ({ navigation }) => {
     return {
       headerleft: null,
@@ -32,7 +34,7 @@ export default class NotificationsScreen extends React.Component {
   constructor(props) {
     super(props);
     console.ignoredYellowBox = [
-      'Setting a timer'
+      'Setting a timer','Warning: Each', 'Warning: Failed'
       ];
     this.state = {
         show: false,
@@ -68,7 +70,7 @@ export default class NotificationsScreen extends React.Component {
 
 
   componentDidMount() {
-    id_usuario=3 //id usuario actual
+    id_usuario=10 //id usuario actual
     return fetch('http://68.183.139.254/api/v1/alerts/' + id_usuario)
     .then( (response) => response.json() )
     .then( (responseJson ) => {
@@ -112,11 +114,11 @@ export default class NotificationsScreen extends React.Component {
         <View style={styles.container}>
         <Header {...this.props} namePage="Notificaciones"/> 
         
-        {this.state.alerts.map((item) => {
+        {this.state.alerts.map((item,i) => {
               
               console.log(item)
               return (
-                    <Notification key={item.title} data={item} callback={this.Callback}
+                    <Notification key={i} data={item} callback={this.Callback}
                         navigation={this.props.navigation}
                         />
               )

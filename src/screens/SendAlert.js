@@ -195,10 +195,10 @@ export default class SendAlert extends React.Component {
           }
       }*/
     
-      componentWillMount(){
+    componentWillMount(){
         date= Date.now()
         this.setState({img_dir:date})
-      }
+    }
 
     deleteSelectLevels(selectedLevels){
         selectedLevels.map((item) => {
@@ -230,8 +230,8 @@ export default class SendAlert extends React.Component {
             <View>
                 <View style={{width:width}}>
                     <View style={styles.containerLevels}>
-                            {selectedLevels.map((item)=>{return(
-                                <TouchableHighlight underlayColor="transparent" style={styles.buttonSelectedLevel} onPress={() => this.selectedLevel(item)}>
+                            {selectedLevels.map((item, i)=>{return(
+                                <TouchableHighlight key={i} underlayColor="transparent" style={styles.buttonSelectedLevel} onPress={() => this.selectedLevel(item)}>
                                     <View style={{alignItems:'center',alignContent:'center',flexDirection: 'row'}}>
                                         <Text style={[styles.text,{fontSize:14}]}>{item.name}</Text>
                                         <Icon name="remove" size={16} color="gray" style={{left:4}}/>

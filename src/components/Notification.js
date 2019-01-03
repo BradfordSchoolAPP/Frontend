@@ -56,7 +56,7 @@ export default class Notification extends Component{
         var monthIndex = date.getMonth();
         var year = date.getFullYear();
       
-        return day  + monthNames[monthIndex];
+        return day  + " " + monthNames[monthIndex];
       }
 
 
