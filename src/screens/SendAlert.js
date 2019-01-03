@@ -368,7 +368,7 @@ export default class SendAlert extends React.Component {
                     confirmButtonColor="green"
                     style
                     onConfirmPressed={() => 
-                        {this.options()}
+                        {this.props.navigation.navigate('Home')}
                     }
                 />    
             </View>
