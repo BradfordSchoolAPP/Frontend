@@ -10,6 +10,8 @@ import * as firebase from 'firebase';
 import { CheckBox } from 'react-native-elements'
 import AwesomeAlert from 'react-native-awesome-alerts';
 
+import { Permissions, Notifications } from 'expo';
+
 const {width,height} = Dimensions.get('window')
 
 export default class CreateNewScreen extends React.Component {
@@ -41,7 +43,8 @@ export default class CreateNewScreen extends React.Component {
       loading: true,
       confirm: false,
       message: '',
-      fullDates:false
+      fullDates:false,
+      urlImages:[],
       
     }
   }
@@ -53,6 +56,8 @@ export default class CreateNewScreen extends React.Component {
     var ref = firebase.storage().ref().child("images/"+ this.state.img_dir +"/" + name);
     return ref.put(blob);
   }
+
+
 
   async upload(){
     if(this.state.title === '' || this.state.details === '' || this.state.photos.length === 0 ){
@@ -68,7 +73,10 @@ export default class CreateNewScreen extends React.Component {
       this.setState({loading:true, confirm:false, message:"Ingresando noticia"})
       this.showAlert()
       this.send()
-      setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});}, 10000);
+      setTimeout(()=>{
+        this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});
+        this.send2();
+      }, 10000);
     } 
     
     
@@ -90,6 +98,92 @@ export default class CreateNewScreen extends React.Component {
     }),
   });
   }
+
+
+  //********************************************************************************************* */
+
+  send2(){
+    console.log("segundo " + this.state.img_dir)
+    fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify([{
+      to:"ExponentPushToken[k6diucPsZYw-EELCmW7HRM]",
+      body:this.state.title,
+      title:"Noticia importante",
+      sound: 'default',
+      data:{
+        urlImages:this.state.img_dir,
+        json:{
+          title:this.state.title,
+          details:this.state.details,
+          date: Date.now()
+        }
+      }},
+      {
+      to:"ExponentPushToken[YAJtPGAKJ2KO4iupZK2A1r]",//ExponentPushToken[W6EwqNAQMTIadCW5ybmn8N]
+      body:this.state.title,
+      title:"Noticia importante",
+      sound: 'default',
+      data:{
+        urlImages:this.state.img_dir,
+        json:{
+          title:this.state.title,
+          details:this.state.details,
+          date: Date.now()
+        }
+      }}
+    ]
+
+    ),
+  });
+  }
+
+  componentWillMount(){
+    //console.log("acaaa")
+    //registerForPushNotificationsAsync();
+    this.listener = Notifications.addListener(this.listen)
+    
+  }
+
+  componentWillUnmount(){
+      this.listener && Notifications.removeListener(this.listen)
+  }
+
+  listen = ({origin,data}) => {
+      console.log("cool data", origin, data)
+      console.log("origin: ", origin)
+      if(origin == "selected"){
+          //this.setState({loading:false, confirm:true, message:data.message})
+          //this.showAlert()
+          {this.props.navigation.navigate('details',{
+                  data: data.json,
+                  image: data.urlImages
+                })
+          }
+      }
+  }
+
+  componentWillMount(){
+    date= Date.now()
+    this.setState({img_dir:date})
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+  //*********************************************************** */
   
 
 
@@ -116,10 +210,7 @@ export default class CreateNewScreen extends React.Component {
     )
   }
 
-  componentWillMount(){
-    date= Date.now()
-    this.setState({img_dir:date})
-  }
+
 
 
   showAlert = () => {

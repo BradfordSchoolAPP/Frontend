@@ -21,9 +21,10 @@ export default class New extends Component{
 
     constructor(props) {
         super(props);
-        console.ignoredYellowBox = [
-          'Setting a timer'
-          ];
+        console.ignoredYellowBox = ['Setting a timer'];
+        
+        this.isMounted = true;
+
         this.state = {
           url:null,
           activeSlide:0,
@@ -37,6 +38,7 @@ export default class New extends Component{
     
     
     componentWillMount(){    
+        console.log("acaaaaaaaaaaaa")
         data = this.props.dataJson
         console.log(data)
 
@@ -51,11 +53,16 @@ export default class New extends Component{
             });
           }
           catch(error){
-            console.log(error)
+            console.warn(error)
           }
         } 
-    }
+      }
+        
 
+  
+
+
+    
     
     getUrlImages(img_dir,image,callback){
       const imageRef = firebase.database().ref('images/'+img_dir +'/'+image + '/').on('value', (snapshot) => {
@@ -159,7 +166,6 @@ export default class New extends Component{
                    <TouchableHighlight style={styles.details}
                    onPress={() =>{this.props.navigation.navigate('details',{
                      data: this.props.dataJson,
-                     image: this.state.urlImages[0]
                    } )}}>
                         <Text style= {styles.seemore}>
                           Ver más

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "383926491501",
+    "firebase_url": "https://app-centro-de-padres.firebaseio.com",
+    "project_id": "app-centro-de-padres",
+    "storage_bucket": "app-centro-de-padres.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383926491501:android:35af3d73b9b6e7e6",
+        "android_client_info": {
+          "package_name": "android.package"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383926491501-507j0f4u8a7i17uil78ircpdg61ofmvr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBt8O1ed1wgsVLE17kfvtUliX-GLcbxCI4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

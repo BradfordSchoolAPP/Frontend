@@ -10,8 +10,9 @@ import Event from '../components/Event';
 import DetailEventScreen from '../screens/DetailEventScreen';
 import AddEventScreen from '../screens/AddEventScreen';
 import CreateNewScreen from '../screens/CreateNewScreen'
-
+import SendAlert from '../screens/SendAlert';
 import { createDrawerNavigator} from 'react-navigation';
+import NotificationsScreen from '../screens/NotificationsScreen';
 
 const AddEventStack = createStackNavigator({
   AddEvent:AddEventScreen,
@@ -92,6 +93,26 @@ createNewStack.navigationOptions = {
   }
 };
 
+const SendAlertStack = createStackNavigator({
+  send:SendAlert,
+})
+
+SendAlertStack.navigationOptions = {
+  navigationOptions: {
+    headerLeft:null
+  }
+};
+
+const NotificationStack = createStackNavigator({
+  noti:NotificationsScreen,
+})
+
+NotificationStack.navigationOptions = {
+  navigationOptions: {
+    headerLeft:null
+  }
+};
+
 
 
 
@@ -110,12 +131,19 @@ export default createDrawerNavigator(
     Benefits:{
       screen: BenefitsScreen,
     },
+    noti:{
+      screen: NotificationsScreen,
+    },
+
     create:{
       screen: CreateNewScreen,
     },
     AddEvent:{
       screen: AddEventScreen,
     },
+    send:{
+      screen: SendAlert,
+    }
   },
   {
     initialRouteName: 'Home',
