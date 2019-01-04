@@ -72,13 +72,11 @@ export default class CreateNewScreen extends React.Component {
       )
       this.setState({loading:true, confirm:false, message:"Ingresando noticia"})
       this.showAlert()
+      this.send()
       setTimeout(()=>{
-        this.send();
         this.setState({loading:false, confirm:true, message:"Noticia guardada exitosamente"});
+        this.send2();
       }, 10000);
-
-     
-      
     } 
     
     
@@ -104,7 +102,7 @@ export default class CreateNewScreen extends React.Component {
 
 
   //********************************************************************************************* */
-  /*
+
   send2(){
     console.log("segundo " + this.state.img_dir)
     fetch('https://exp.host/--/api/v2/push/send', {
@@ -145,9 +143,6 @@ export default class CreateNewScreen extends React.Component {
   });
   }
 
-  */
-
-  /*
   componentWillMount(){
     //console.log("acaaa")
     //registerForPushNotificationsAsync();
@@ -160,16 +155,18 @@ export default class CreateNewScreen extends React.Component {
   }
 
   listen = ({origin,data}) => {
-      console.log("data", data)
+      console.log("cool data", origin, data)
       console.log("origin: ", origin)
       if(origin == "selected"){
+          //this.setState({loading:false, confirm:true, message:data.message})
+          //this.showAlert()
           {this.props.navigation.navigate('details',{
                   data: data.json,
-                  image: json.img_dir
+                  image: data.urlImages
                 })
           }
       }
-  }*/
+  }
 
   componentWillMount(){
     date= Date.now()

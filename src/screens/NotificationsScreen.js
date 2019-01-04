@@ -12,7 +12,7 @@ import Notification from '../components/Notification'
 import {
     SCLAlert,
     SCLAlertButton
-  } from 'react-native-scl-alert'
+  } from '../react-native-scl-alert'
 
 export default class NotificationsScreen extends React.Component {
 

@@ -2,14 +2,12 @@ import React from 'react';
 import { Alert, Text, TextInput, StyleSheet, View, Dimensions, TouchableHighlight, ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/FontAwesome'
-import MultiSelect from 'react-native-multiple-select';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import Modal from "react-native-modal";
 import Header from '../components/Header'
-import { Button } from 'react-native-elements';
 
-import * as firebase from 'firebase';
-import { Permissions, Notifications } from 'expo';
+
+
 
 
 const {width,height} = Dimensions.get('window');
