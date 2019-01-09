@@ -35,6 +35,7 @@ export default class MyCoursesScreen extends React.Component {
         childrens:[],
         namesChildrens: [],
         schoolmates:[],
+        teachers:[],
         schoolmate:"",
         parents:[],
         json:[], 
@@ -45,6 +46,7 @@ onChangeText(text) {
   this.state.childrens.map((item) => {
     if(item.name === text){
       this.setState({ course: item.course });
+      this.setState({teachers:item.course.teachers})
       this.getSchoolmates(item.course.id);
     }
    
@@ -97,6 +99,7 @@ componentDidMount() {
             if(i === 0 ){
               this.setState({student: item.name})
               this.setState({course: item.course})
+              this.setState({teachers: item.course.teachers})
               this.getSchoolmates(item.course.id)
             }
             var auxChildren = {}
@@ -125,6 +128,8 @@ componentDidMount() {
     let course = this.state
     let schoolmates = this.state;
     let parents = this.state;
+    let teachers = this.state;
+    
     return(
         <View style={styles.container}>
           <Header {...this.props} namePage="Mis cursos"/> 
@@ -146,9 +151,28 @@ componentDidMount() {
                 />
               </View>
             </View>
-            <View style={{marginVertical: height*0.04,alignContent:"center",alignItems:"center",justifyContent:"center"}}>
+            <View style={{marginVertical: height*0.01,alignContent:"center",alignItems:"center",justifyContent:"center"}}>
                   <Text style={{fontSize:30, color: "#29a184"}}>{this.state.course.year_course + " - " + this.state.course.section }</Text>
             </View>
+            <Text style={{marginVertical:height*0.01,fontSize:23, color: "#29a184"}}>Profesor jefe</Text>
+            <View style={{marginBottom: height*0.04}}>
+              {this.state.teachers.map((item) => {
+                    return (
+                        <View style={styles.containerSchoolmates} >
+                            <View style={{flexDirection: 'row',alignContent:'space-between'}}>
+                              <View style={{width:60,height:62, alignContent:"center",alignItems:"center",justifyContent:"center"}}>
+                                <UserAvatar size="55" name={item.name}/>
+                              </View>
+                              <View style={{marginHorizontal: 20}}>
+                                <Text style={{fontSize:22, color: "#042e60", marginTop:10}}>{item.name}</Text> 
+                                <Text style={{fontSize:17, color: "gray",marginBottom:10}}>{item.email}</Text> 
+                              </View>
+                            </View>
+                        </View>                 
+                    )
+                })}
+            </View>
+            <Text style={{marginBottom:height*0.01, fontSize:23, color: "#29a184"}}>Alumnos</Text>
             <ScrollView>
                 {this.state.schoolmates.map((item) => {
                   return (
