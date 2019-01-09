@@ -13,6 +13,7 @@ import CreateNewScreen from '../screens/CreateNewScreen'
 import SendAlert from '../screens/SendAlert';
 import { createDrawerNavigator} from 'react-navigation';
 import NotificationsScreen from '../screens/NotificationsScreen';
+import ContactScreen from '../screens/ContactScreen';
 
 const AddEventStack = createStackNavigator({
   AddEvent:AddEventScreen,
@@ -113,6 +114,16 @@ NotificationStack.navigationOptions = {
   }
 };
 
+const contactStack = createStackNavigator({
+  contact: ContactScreen,
+})
+
+contactStack.navigationOptions = {
+  navigationOptions:{
+    headerLeft:null
+  }
+}
+
 
 
 
@@ -133,6 +144,10 @@ export default createDrawerNavigator(
     },
     noti:{
       screen: NotificationsScreen,
+    },
+    
+    contact:{
+      screen: ContactScreen
     },
 
     create:{
