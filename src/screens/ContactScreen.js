@@ -69,7 +69,7 @@ console.log(error)
             source={require('../images/logo-bradford.jpg')}
             />
           </View>
-          <View style={{width:width*0.8, marginHorizontal: width*0.1, marginVertical:height*0.01}}>
+          <View style={{width:width*0.8, marginHorizontal: width*0.1, marginBottom:height*0.01}}>
             <Text style={{fontSize: 22, color:"gray"}}>{this.state.informations.description}</Text>
             <View style={[styles.center,{marginBottom:14}]}>
               <View style={[styles.center,{width:120,borderBottomColor:"#29a184",borderBottomWidth:2}]}>
@@ -81,21 +81,24 @@ console.log(error)
                 )
               })}
             </View>
+            <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Dirección</Text>
             <View style={{marginVertical:5}}>
-                      <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Dirección</Text>
-                      <Text style={{fontSize:18,color:"gray"}}>{this.state.informations.address}</Text>
+              <Icon name="map-marker" size={20} color="gray" style={{position:"absolute",marginLeft:8, marginBottom:12}}/>
+              <Text style={{fontSize:18,color:"gray",marginLeft:24}}>{this.state.informations.address}</Text>
             </View>
+            <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Telefonos</Text>
+            {this.state.phones.map((item)=>{
+              return(
+                <View style={{marginVertical:5}}>
+                  <Icon name="phone" size={20} color="gray" style={{position:"absolute",marginLeft:5, marginBottom:12}}/>  
+                    <Text style={styles.seemore} 
+                      onPress={()=> Linking.openURL('tel:+'+item)}>+{item}</Text>
+                </View>
+              )
+            })}
+            <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Correo</Text>
             <View style={{marginVertical:5}}>
-              <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Telefonos</Text>
-                {this.state.phones.map((item)=>{
-                  return(
-                          <Text style={styles.seemore} 
-                            onPress={()=> Linking.openURL('tel:'+item)}>+{item}</Text>
-                  )
-                })}
-            </View>
-            <View style={{marginVertical:5}}>
-              <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Correo</Text>
+              <Icon name="envelope-o" size={20} color="gray" style={{position:"absolute", marginBottom:12}}/>
               <Text style={styles.seemore} 
                 onPress={() => Linking.openURL('mailto:'+this.state.informations.email+'?subject=Mensaje a centro de padres')}>
                 {this.state.informations.email}
@@ -148,5 +151,6 @@ const styles = StyleSheet.create({
     color: "#29a184",
     textDecorationLine:"underline",
     fontSize:18,
+    marginLeft:26,
   }
 })
