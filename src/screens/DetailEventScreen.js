@@ -41,9 +41,21 @@ export default class DetailEvent extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id:{$oid: "5bfefeee152b0c04fce7345a"}
+            id:this.props.navigation.getParam('id')
         }),
       });
+    }
+
+    _openEdit(){
+        console.log("el titulo a editar es" + this.props.navigation.getParam('title'))
+        this.props.navigation.navigate('EditEvent',{
+            id: this.props.navigation.getParam('id'),
+            title: this.props.navigation.getParam('title'),
+            date: this.props.navigation.getParam('date'),
+            hour: this.props.navigation.getParam('hour'),
+            place: this.props.navigation.getParam('place'),
+            details: this.props.navigation.getParam('details')
+        })
     }
 
 
@@ -77,6 +89,7 @@ export default class DetailEvent extends React.Component {
                 <View style={styles.detailContainer}>
                     <View style={{ borderBottomColor: '#bbb',borderBottomWidth: StyleSheet.hairlineWidth,}}>
                         <Icon name="calendar" size={22} color="gray" style={styles.icon2}/>
+                        {console.log("voy a imprimir como se ve la fecha: "+ this.props.navigation.getParam('date', '...'))}
                         <Text style={styles.text}>{Moment(this.props.navigation.getParam('date', '...')).format('ddd DD')} de { Moment(this.props.navigation.getParam('date', '...')).format('MMMM, YYYY')}
                         </Text>
                     </View>
@@ -96,7 +109,7 @@ export default class DetailEvent extends React.Component {
                     </ScrollView>
                 </View> 
                 <View style={styles.botones}>
-                    <TouchableHighlight>
+                    <TouchableHighlight onPress={() => this._openEdit()}>
                         <View style={styles.boton}>
                             <Icon name="edit" size={22} color="#0c6653" style={{position:'absolute',top:15,left:25}}/>
                             <Text style={styles.edit}>Editar</Text>

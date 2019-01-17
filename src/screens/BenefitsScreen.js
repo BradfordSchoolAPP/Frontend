@@ -6,9 +6,35 @@ import { StyleSheet, Text,TouchableHighlight, View, Button,Dimensions, ScrollVie
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import Header from '../components/Header'
+import Benefit from '../components/Benefit'
+
+const {width,height} = Dimensions.get('window')
 
 export default class BenefitsScreen extends React.Component {
+  constructor(props){
+    super(props)
 
+    this.state= {
+        json:[],
+    }
+  }
+  componentDidMount() {
+    return fetch('http://68.183.139.254/api/v1/scolarships')
+    .then( (response) => response.json() )
+    .then( (responseJson ) => {
+      this.setState({
+        json: responseJson,
+      })
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+  }
+  _openDetail(item){
+    console.log("VOY A IMRPMIR EL ITEM QUE ENVIARE")
+    console.log(item)
+    //this.props.navigation.navigate('DetailBenefit',{item})
+}
   static navigationOptions = ({ navigation }) => {
     return {
       headerleft: null,
@@ -25,8 +51,15 @@ export default class BenefitsScreen extends React.Component {
   render(){
     return(
         <View style={styles.container}>
-        <Header {...this.props} namePage="Becas"/> 
-          
+          <Header {...this.props} namePage="Becas"/> 
+          <ScrollView style={{height:height*0.9}}>
+          {this.state.json.map((item) => {
+            console.log(item.id)
+            return (
+                  <Benefit benefit={item}/>                     
+            )})
+          }
+          </ScrollView>
         </View>
     );
   }
@@ -37,6 +70,10 @@ export default class BenefitsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: 'white',
+  },
+  center:{
+    alignItems:'center',
+    justifyContent: 'center',
+    alignContent:'center',
   },
 })

@@ -32,7 +32,6 @@ DetailEventStack.navigationOptions = {
     headerLeft:  null
   }
 };
-
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
