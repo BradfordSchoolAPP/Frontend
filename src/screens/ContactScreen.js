@@ -50,12 +50,6 @@ console.log(error)
 })
 ;
 };
-  _handleOpenWithLinking = () => {
-    console.log("FUNCIONO EL BOTON KJIJIJIJIJ")
-    Linking.openURL('mailto:support@example.com?subject=Mensaje a centro de padres') 
-  }
-  
-
 
   render(){
     let informations = this.state;
@@ -73,7 +67,7 @@ console.log(error)
             <Text style={{fontSize: 22, color:"gray"}}>{this.state.informations.description}</Text>
             <View style={[styles.center,{marginBottom:14}]}>
               <View style={[styles.center,{width:120,borderBottomColor:"#29a184",borderBottomWidth:2}]}>
-                <Text style={{fontSize: 20, color:"#042e60", marginVertical:5}}>Personas </Text>
+                <Text style={{fontSize: 20, color:"#042e60", marginVertical:5}}>Personas</Text>
               </View>
               {this.state.people.map((item)=>{
                 return(
