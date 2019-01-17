@@ -86,7 +86,7 @@ console.log(error)
               <Icon name="map-marker" size={20} color="gray" style={{position:"absolute",marginLeft:8, marginBottom:12}}/>
               <Text style={{fontSize:18,color:"gray",marginLeft:24}}>{this.state.informations.address}</Text>
             </View>
-            <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Telefonos</Text>
+            <Text style={{fontSize:18,color:"gray",fontWeight: 'bold'}}>Telefono</Text>
             {this.state.phones.map((item)=>{
               return(
                 <View style={{marginVertical:5}}>
