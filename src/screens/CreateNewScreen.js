@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight, TextInput,View, Button,Dimensions, ScrollView,Image,Modal} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight, TextInput,View, Button,Dimensions, ScrollView,Image,Modal,AsyncStorage,InteractionManager} from 'react-native';
 
 
 
@@ -14,19 +14,32 @@ import { Permissions, Notifications } from 'expo';
 
 const {width,height} = Dimensions.get('window')
 
+
+
 export default class CreateNewScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-    return {
-      headerleft: null,
-      drawerLabel: 'Crear noticia',
-      drawerIcon:  
-      <Icon
-        name="newspaper-o"
-        color= "white"
-        size={20} 
-      />
-    };
+    
+    
+    if(1){
+      return {
+        headerleft: null,
+        drawerLabel: 'Crear noticia',
+        drawerIcon:  
+        <Icon
+          name="newspaper-o"
+          color= "white"
+          size={20} 
+        />
+      };
+    }
+    else{
+      console.log("Aca usuario apoderado")
+      return {
+        drawerLabel: () => null,
+        drawerIcon: () => null
+      };
+    }
   };
 
   constructor(props) {
@@ -49,6 +62,10 @@ export default class CreateNewScreen extends React.Component {
     }
   }
 
+
+  _reload() {
+      console.log("aaaaaaa");
+  }
   uploadImages = async (uri,name)=> {
     const response = await fetch(uri);
     const blob = await response.blob();

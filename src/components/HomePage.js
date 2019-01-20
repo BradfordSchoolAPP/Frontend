@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {
     Text,
     View,
@@ -8,19 +8,21 @@ import {
     Dimensions,
     ImageBackground,
     TextInput,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    AsyncStorage
 } from 'react-native'
 
 import { LinearGradient } from 'expo';
+
 
 const {width,height} = Dimensions.get('window')
 
 import AppNavigator from '../navigation/AppNavigator'
 import Icon from 'react-native-vector-icons/FontAwesome'
-
 import AwesomeAlert from 'react-native-awesome-alerts';
-
 import { Permissions, Notifications } from 'expo';
+
+import {connect} from 'react-redux'
 
 registerForPushNotificationsAsync = async () =>{
     const { status: existingStatus } = await Permissions.getAsync(
@@ -54,7 +56,7 @@ registerForPushNotificationsAsync = async () =>{
 
 
 
-export default class HomePage extends Component{
+class HomePage extends PureComponent{
 
     constructor(props){
         super(props)
@@ -111,14 +113,18 @@ export default class HomePage extends Component{
             this.showAlert()
             await this.send()
         }*/
-        {this.props.navigation.navigate('Home')}
+        //{this.props.navigation.navigate('Home')}
+
+        
+        this.send()
+
     }
 
     showAlert = () => {
         this.setState({
           showAlert: true
         });
-      };
+    };
      
     hideAlert = () => {
         this.setState({
@@ -127,16 +133,16 @@ export default class HomePage extends Component{
     }
 
     send(){
-        
-        fetch('http://191.115.199.185/api/v1/parents/login', {
+        console.log("aca en el post")
+        fetch('http://68.183.139.254/api/v1/parents/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email:this.state.email,
-                password:this.state.pass
+                email:"calvarez@gmail.com", //this.state.email,
+                password:"calvarez"//this.state.pass
             }),
             }).then((response) => response.json())
             .then((responseJson) => {
@@ -149,7 +155,9 @@ export default class HomePage extends Component{
                     console.log("no es null")
                     console.log(responseJson)
                     this.hideAlert()
-                    {this.props.navigation.navigate('Home')}
+                    var token = "sometokenregex"
+                    this.props.authSuccess(token,this.state.email,'2');
+                    //{this.props.navigation.navigate('Home')}
                 }
             })
             .catch((error) => {
@@ -353,4 +361,35 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = (state,ownProps) => {
+    return {}
+}
 
+export const actionCreator = (type,user, payload = null) => ({type,user,payload})
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return{
+        authSuccess:(token,user_type, user_id)=> {
+            AsyncStorage.multiSet([['token',token],['authenticated','1'],['user_type',user_type],['user_id',user_id]])
+            dispatch(actionCreator('LOGIN_SUCCESS',user_type))
+        }
+    }
+}
+
+export const authStateReducer = (state={app_started:false,authenticated:false},{type,user,payload}) => {
+    switch(type){
+        case 'LOGIN_SUCCESS':
+            return {...state, authenticated:true, user_type:user}
+        case 'LOGGOUT':
+            return {...state, authenticated:false}
+        case 'APP_LOADED':
+            return {...state, app_started:true}
+        default:
+            return state
+
+    }
+}
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(HomePage)

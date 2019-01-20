@@ -1,31 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight,Modal, View,FlatList, Button,Dimensions, ScrollView,Image} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight,Modal, View,FlatList, Button,Dimensions, ScrollView,Image, AsyncStorage} from 'react-native';
 
 import Header from '../components/Header'
 import New from '../components/New'
 import DetailsNew from './DetailsNew'
 import * as firebase from 'firebase';
-
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 
-
-
-
-
 export default class HomeScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      drawerLabel: 'Noticias',
-      drawerIcon:  
-      <Icon
-        name="newspaper-o"
-        color= "white"
-        size={20} 
-      />
-    };
-  };
+
 
   constructor(props) {
     super(props);
@@ -59,6 +44,9 @@ export default class HomeScreen extends React.Component {
 
   
   componentDidMount() {
+  
+
+    this.checkUserData()
     
     return fetch('http://68.183.139.254/api/v1/news')
     .then( (response) => response.json() )
@@ -71,6 +59,15 @@ export default class HomeScreen extends React.Component {
     .catch((error) => {
       console.log(error)
     });
+  }
+
+
+  async checkUserData(){
+    const user_type = await AsyncStorage.getItem('user_type').catch(e=> console.log(e))
+    const user_id = await AsyncStorage.getItem('user_id').catch(e=> console.log(e))
+    console.log("*********************")
+    console.log(user_type)
+    console.log(user_id)
   }
   
 

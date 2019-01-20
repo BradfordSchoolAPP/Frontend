@@ -128,7 +128,7 @@ NotificationStack.navigationOptions = {
 
  
 
-export default MainTabNavigator= (admin) => createDrawerNavigator(
+export default MainTabParents= (admin) => createDrawerNavigator(
   {
     Home: {
       screen: HomeScreen,
@@ -155,16 +155,6 @@ export default MainTabNavigator= (admin) => createDrawerNavigator(
     noti:{
       screen: NotificationsScreen,
     },
-
-    create:{
-      screen: CreateNewScreen,
-    },
-    AddEvent:{
-      screen: AddEventScreen,
-    },
-    send:{
-      screen: SendAlert,
-    }
   },
   { 
     
@@ -181,5 +171,3 @@ export default MainTabNavigator= (admin) => createDrawerNavigator(
 
   )},
 );
-
-
