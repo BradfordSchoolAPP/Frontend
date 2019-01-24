@@ -47,7 +47,7 @@ export default class RegisterScreen extends React.Component {
             this.showAlert()
             this.setState({option:2})
         }
-        else if(this.state.email === "julio.serrano@usach.cl"){
+        else if(this.state.email === "Julio.serrano@usach.cl"){
             this.setState({option:1})
             this.setState({loading:true, confirm:false, cancel:false, message:'Verificando mail'})
             this.showAlert()
@@ -245,7 +245,7 @@ export default class RegisterScreen extends React.Component {
                             {this.props.navigation.navigate('Home')}
                         }
                         else if(this.state.option == 4){
-                            Linking.openURL('mailto:support@example.com?subject=Mensaje a centro de padres') 
+                            Linking.openURL('mailto:Bradford?subject=Solicitud de registro') 
                         }
                         
 					}}

@@ -141,8 +141,8 @@ class HomePage extends PureComponent{
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email:"calvarez@gmail.com", //this.state.email,
-                password:"calvarez"//this.state.pass
+                email:this.state.email,
+                password:this.state.pass
             }),
             }).then((response) => response.json())
             .then((responseJson) => {
