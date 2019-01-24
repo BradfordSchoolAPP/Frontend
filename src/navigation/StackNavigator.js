@@ -8,6 +8,7 @@ import New from '../components/New'
 import Logout from '../components/Logout';
 import MainTabNavigator from '../navigation/MainTabNavigator'
 import MainTabParents from './MainTabParents';
+import RegisterScreen from '../screens/RegisterScreen';
 
 
 
@@ -40,6 +41,12 @@ export default StacknNavigator= (authenticated, admin)=>createStackNavigator(
       },
       details: {
         screen: DetailsNew,
+        navigationOptions:{
+          header:null
+        },
+      },
+      register:{
+        screen: RegisterScreen,
         navigationOptions:{
           header:null
         },

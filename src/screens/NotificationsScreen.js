@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight, View, Button,Dimensions, ScrollView,Image} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight, View, Button,Dimensions, ScrollView,Image, AsyncStorage} from 'react-native';
 
 
 
@@ -40,6 +40,7 @@ export default class NotificationsScreen extends React.Component {
         show: false,
         loading: false,
         confirm: false,
+        userId: 0,
         title:'',
         message: '',
 
@@ -67,11 +68,11 @@ export default class NotificationsScreen extends React.Component {
     }
   }
 
+  async componentDidMount() {
+    const user_id = await AsyncStorage.getItem('user_id').catch(e=> console.log(e))
+    console.log(user_id)
 
-
-  componentDidMount() {
-    id_usuario=10 //id usuario actual
-    return fetch('http://68.183.139.254/api/v1/alerts/' + id_usuario)
+    return fetch('http://68.183.139.254/api/v1/alerts/' + user_id)
     .then( (response) => response.json() )
     .then( (responseJson ) => {
       this.setState({

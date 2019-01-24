@@ -153,11 +153,16 @@ class HomePage extends PureComponent{
                 }
                 else{
                     console.log("no es null")
-                    console.log(responseJson)
-                    this.hideAlert()
-                    var token = "sometokenregex"
-                    this.props.authSuccess(token,this.state.email,'2');
-                    //{this.props.navigation.navigate('Home')}
+                    if(responseJson[0].user_types[0].role === 'admin'){
+                        this.hideAlert()
+                        var token = "sometokenregex"
+                        this.props.authSuccess(token,'1',String(responseJson[0].id));
+                    }
+                    else if(responseJson[0].user_types[0].role === 'parent'){
+                        this.hideAlert()
+                        var token = "sometokenregex"
+                        this.props.authSuccess(token,'2',String(responseJson[0].id));
+                    }
                 }
             })
             .catch((error) => {
@@ -207,7 +212,7 @@ class HomePage extends PureComponent{
                             <Text style={styles.subtitle}>Centro de Padres Colegio Bradford</Text>
                         </View>
 
-                    </KeyboardAvoidingView>
+                    
 
                         <View style={styles.form}>
                             <Icon name="user" size={26} color="white" style={styles.inputIcon}/>
@@ -243,11 +248,13 @@ class HomePage extends PureComponent{
                                 <Text style={styles.text}> Ingresar </Text>
                             </TouchableHighlight>
 
-                            <TouchableHighlight style={styles.registro}>
+                            <TouchableHighlight style={styles.registro}
+                                onPress={()=> this.props.navigation.navigate('register')}>
                                 <Text style={styles.text}> Registro </Text>
                             </TouchableHighlight> 
                         </View>
-
+                    
+                    </KeyboardAvoidingView>
                         
 
 

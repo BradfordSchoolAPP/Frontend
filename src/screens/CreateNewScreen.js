@@ -8,6 +8,7 @@ import ImageBrowser from '../camera/ImageBrowser';
 import Header from '../components/Header'
 import * as firebase from 'firebase';
 import { CheckBox } from 'react-native-elements'
+import { Keyboard } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 import { Permissions, Notifications } from 'expo';
@@ -190,24 +191,6 @@ export default class CreateNewScreen extends React.Component {
     this.setState({img_dir:date})
   }
   
-
-
-
-
-
-
-
-
-
-
-
-  //*********************************************************** */
-  
-
-
-
-
-
   imageBrowserCallback = (callback) => {
     callback.then((photos) => {
       console.log(photos)
@@ -257,6 +240,7 @@ export default class CreateNewScreen extends React.Component {
 
 
 
+
   render(){
     return(
         <View style={styles.container}>
@@ -270,6 +254,7 @@ export default class CreateNewScreen extends React.Component {
 
             <View style={styles.form}>
                 <TextInput
+                        onSubmitEditing={Keyboard.dismiss}
                         style={styles.input}
                         placeholder = {'Título noticia'}
                         multiline={true}
@@ -285,6 +270,7 @@ export default class CreateNewScreen extends React.Component {
             </View>
             <View style={styles.form}>
                 <TextInput
+                        onSubmitEditing={Keyboard.dismiss}
                         style={styles.input}
                         placeholder = {'Descripción'}
                         multiline={true}

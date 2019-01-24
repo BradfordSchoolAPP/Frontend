@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Text, TextInput, StyleSheet, View, Dimensions, TouchableHighlight, ScrollView } from 'react-native';
+import { Alert, Text, TextInput, StyleSheet, View, Dimensions,Keyboard, TouchableHighlight, ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -286,6 +286,7 @@ export default class SendAlert extends React.Component {
                 <View style={{height:height*0.75,width:width,}}>
                     <View style={[styles.form, {marginTop:10}]}>
                         <TextInput
+                            onSubmitEditing={Keyboard.dismiss}
                             style={styles.input}
                             placeholder = {'Título alerta'}
                             multiline={true}
@@ -301,6 +302,7 @@ export default class SendAlert extends React.Component {
                     </View>
                     <View style={styles.form}>
                         <TextInput
+                            onSubmitEditing={Keyboard.dismiss}
                             style={styles.input}
                             placeholder = {'Descripción'}
                             multiline={true}

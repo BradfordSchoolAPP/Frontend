@@ -133,8 +133,8 @@ export default MainTabNavigator= (admin) => createDrawerNavigator(
     Home: {
       screen: HomeScreen,
       navigationOptions: {
-        drawerLabel: admin? () => null:'Noticias',
-        drawerIcon: admin? () => null:
+        drawerLabel:'Noticias',
+        drawerIcon: 
         <Icon
           name="newspaper-o"
           color= "white"

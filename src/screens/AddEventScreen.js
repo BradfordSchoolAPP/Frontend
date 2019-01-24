@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight, View,TextInput, Button,Dimensions, ScrollView,Image} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight, View,TextInput, Button,Dimensions,Keyboard, ScrollView,Image} from 'react-native';
 import AppNavigator from '../navigation/AppNavigator';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import DatePicker from 'react-native-datepicker';
@@ -106,6 +106,7 @@ export default class AddEventScreen extends React.Component {
             <View style={styles.formulario}>
                 <View style={[styles.form, {marginTop:10}]}>
                     <TextInput
+                        onSubmitEditing={Keyboard.dismiss}
                         style={styles.input}
                         placeholder = {'Título evento'}
                         multiline={true}
@@ -187,6 +188,7 @@ export default class AddEventScreen extends React.Component {
                     <View style={{flexDirection: 'row',alignContent:'space-between'}}>
                         <Icon name="map-marker" size={28} color="gray" style={styles.icon3}/>
                         <TextInput
+                            onSubmitEditing={Keyboard.dismiss}
                             style={styles.input}
                             placeholder = {'Lugar'}
                             multiline={true}
@@ -203,6 +205,7 @@ export default class AddEventScreen extends React.Component {
                 </View>
                 <View style={styles.form}>
                     <TextInput
+                        onSubmitEditing={Keyboard.dismiss}
                         style={styles.input}
                         placeholder = {'Descripción'}
                         multiline={true}
