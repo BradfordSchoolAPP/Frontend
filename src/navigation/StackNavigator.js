@@ -9,6 +9,11 @@ import Logout from '../components/Logout';
 import MainTabNavigator from '../navigation/MainTabNavigator'
 import MainTabParents from './MainTabParents';
 import RegisterScreen from '../screens/RegisterScreen';
+import DetailEventScreen from '../screens/DetailEventScreen';
+import EditBenefit from '../screens/EditBenefit';
+import EditEvent from '../screens/EditEvent';
+import DetailEvent from '../screens/DetailEventScreen';
+import Benefit from '../components/Benefit';
 
 
 
@@ -57,6 +62,30 @@ export default StacknNavigator= (authenticated, admin)=>createStackNavigator(
           header:null
         },
       },
+      DetailEvent: {
+        screen:DetailEventScreen,
+        navigationOptions:{
+          header:null
+        },
+      }, 
+      EditEvent:{
+        screen:EditEvent,
+        navigationOptions:{
+          header:null
+        },
+      },
+      EditBenefit:{
+        screen:EditBenefit,
+        navigationOptions:{
+          header:null
+        },
+      },
+      Benefit:{
+        screen:Benefit,
+        navigationOptions:{
+          header:null
+        },
+      }
     },
     {
       initialRouteName: authenticated? (admin? 'app':'appParent')

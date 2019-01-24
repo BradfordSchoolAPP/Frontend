@@ -30,7 +30,9 @@ export default class DetailEvent extends React.Component {
             showAlert: false
         });
     } 
-
+    componentDidMount() {
+        console.log("ESTOY EN LA VISTA DETALLE")
+    }
     delete(){
         fetch('http://68.183.139.254/api/v1/events', {
         method: 'delete',
@@ -43,19 +45,7 @@ export default class DetailEvent extends React.Component {
         }),
       });
     }
-    _openEdit(){
-        console.log("el titulo a editar es" + this.props.navigation.getParam('title'))
-        this.props.navigation.navigate('EditEvent',{
-            id: this.props.navigation.getParam('id'),
-            title: this.props.navigation.getParam('title'),
-            date: this.props.navigation.getParam('date'),
-            hour: this.props.navigation.getParam('hour'),
-            place: this.props.navigation.getParam('place'),
-            details: this.props.navigation.getParam('details')
-        })
-    }
-    
-
+  
     _openEdit(){
         console.log("el titulo a editar es" + this.props.navigation.getParam('title'))
         this.props.navigation.navigate('EditEvent',{
