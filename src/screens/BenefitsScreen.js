@@ -19,6 +19,9 @@ export default class BenefitsScreen extends React.Component {
     }
   }
   componentDidMount() {
+    this.getBenefits()
+  }
+  getBenefits(){
     return fetch('http://68.183.139.254/api/v1/scolarships')
     .then( (response) => response.json() )
     .then( (responseJson ) => {
@@ -30,11 +33,7 @@ export default class BenefitsScreen extends React.Component {
       console.log(error)
     });
   }
-  _openDetail(item){
-    console.log("VOY A IMRPMIR EL ITEM QUE ENVIARE")
-    console.log(item)
-    //this.props.navigation.navigate('DetailBenefit',{item})
-}
+
   static navigationOptions = ({ navigation }) => {
     return {
       headerleft: null,
@@ -56,7 +55,7 @@ export default class BenefitsScreen extends React.Component {
           {this.state.json.map((item) => {
             console.log(item.id)
             return (
-                  <Benefit benefit={item} navigation={this.props.navigation}/>                     
+                  <Benefit benefit={item} navigation={this.props.navigation} deleteCallback={this.getBenefits.bind(this)}/>                     
             )})
           }
           </ScrollView>
