@@ -135,7 +135,7 @@ export default class SendAlert extends React.Component {
             setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Alerta enviada exitosamente"});}, 2000);
         }
     }
-    //token natalia: TDW8TgKcumzor6eHyYjQ3E
+    //token natalia: 
     //token julio: k6diucPsZYw-EELCmW7HRM
     send(selectedItems){
         array_courses = []

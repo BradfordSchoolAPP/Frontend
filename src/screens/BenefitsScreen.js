@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight, View, Button,Dimensions, ScrollView,Image} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight, View, Button,Dimensions,AsyncStorage, ScrollView,Image} from 'react-native';
 
 
 
@@ -16,9 +16,12 @@ export default class BenefitsScreen extends React.Component {
 
     this.state= {
         json:[],
+        user_type:0,
     }
   }
-  componentDidMount() {
+  async componentDidMount() {
+    const user_type = await AsyncStorage.getItem('user_type').catch(e=> console.log(e))
+    this.setState({user_type:user_type})
     this.getBenefits()
   }
   getBenefits(){
@@ -55,7 +58,7 @@ export default class BenefitsScreen extends React.Component {
           {this.state.json.map((item) => {
             console.log(item.id)
             return (
-                  <Benefit benefit={item} navigation={this.props.navigation} deleteCallback={this.getBenefits.bind(this)}/>                     
+                  <Benefit benefit={item} user_type={this.state.user_type} navigation={this.props.navigation} deleteCallback={this.getBenefits.bind(this)}/>                     
             )})
           }
           </ScrollView>
