@@ -64,6 +64,7 @@ delete(){
         id:this.props.benefit.id
     }),
   });
+  {this.props.deleteCallback()}
 }
     render(){
         Moment.locale('es')
