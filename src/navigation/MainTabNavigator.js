@@ -18,6 +18,7 @@ import CreateNewScreen from '../screens/CreateNewScreen'
 import SendAlert from '../screens/SendAlert';
 import { createDrawerNavigator} from 'react-navigation';
 import NotificationsScreen from '../screens/NotificationsScreen';
+import ContactScreen from '../screens/ContactScreen';
 
 
 import Logout from '../components/Logout'
@@ -124,6 +125,16 @@ NotificationStack.navigationOptions = {
 };
   
 
+const contactStack = createStackNavigator({
+  contact: ContactScreen,
+})
+
+contactStack.navigationOptions = {
+  navigationOptions:{
+    headerLeft:null
+  }
+}
+
 
 
  
@@ -154,6 +165,10 @@ export default MainTabNavigator= (admin) => createDrawerNavigator(
     },
     noti:{
       screen: NotificationsScreen,
+    },
+    
+    contact:{
+      screen: ContactScreen
     },
 
     create:{

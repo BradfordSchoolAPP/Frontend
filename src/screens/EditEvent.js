@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight, View,TextInput, Button,Dimensions,Keyboard, ScrollView,Image} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight, View,TextInput, Button,Dimensions,TouchableWithoutFeedback, ScrollView,Image} from 'react-native';
 import AppNavigator from '../navigation/AppNavigator';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import DatePicker from 'react-native-datepicker';
@@ -8,22 +8,30 @@ import Header from '../components/Header'
 
 const {width,height} = Dimensions.get('window');
 
-export default class AddEventScreen extends React.Component {
+export default class EditEvent extends React.Component {
     constructor(props){
         super(props)
     
         this.state= {
-          title:'',
-          details: '',
-          place: '',
-          date:'',
-          hour: '00:00',
-          showAlert: false,
-          fullDates: false,
-          loading: true,
-          confirm: false,
-          message: '',
+            id: this.props.navigation.getParam('id'),
+            title: this.props.navigation.getParam('title'),
+            date: this.props.navigation.getParam('date'),
+            hour: this.props.navigation.getParam('hour'),
+            place: this.props.navigation.getParam('place'),
+            details: this.props.navigation.getParam('details'),
+            showAlert: false,
+            fullDates: false,
+            loading: true,
+            confirm: false,
+            message: '',
         }
+      }
+      imprimir(){
+          console.log("el titulo nuevo " + this.state.title)
+          console.log("el lugar nuevo " + this.state.place)
+          console.log("el hora nuevo " + this.state.hour)
+          console.log("el dia nuevo " + this.state.date)
+          console.log("el detalles nuevo " + this.state.details)
       }
     
      _validate(){
@@ -35,28 +43,43 @@ export default class AddEventScreen extends React.Component {
         else{
             console.log("campos llenados")
             this.setState({fullDates:true})
-            this.setState({loading:true, confirm:false, message:"Creando Evento"})
+            this.setState({loading:true, confirm:false, message:"Editando Evento"})
             this.showAlert()
-            this.send()
-            setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Evento creado exitosamente"});}, 4000);
+            this.imprimir()
+            this.edit()
+            setTimeout(()=>{this.setState({loading:false, confirm:true, message:"Cambios exitosos"});}, 2000);
         }
     }
-      send(){
+      edit(){
+        console.log("VAMOS A EDITAR:")
+        console.log(this.state.id)
         fetch('http://68.183.139.254/api/v1/events', {
-        method: 'POST',
+        method: 'PUT',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          id: this.state.id,
           title: this.state.title,
           details: this.state.details,
           place: this.state.place,
           date: this.state.date,
-          hour: this.state.hour
+          hour: this.state.hour,
+
         }),
       });
-      }
+    }
+    _openDetail(){
+        this.props.navigation.navigate('DetailEvent',{
+            id: this.props.navigation.getParam('id'),
+            title: this.props.navigation.getParam('title'),
+            date: this.props.navigation.getParam('date'),
+            hour: this.props.navigation.getParam('hour'),
+            place: this.props.navigation.getParam('place'),
+            details: this.props.navigation.getParam('details'),
+        })
+    }
     showAlert = () => {
         this.setState({
           showAlert: true
@@ -95,15 +118,28 @@ export default class AddEventScreen extends React.Component {
     const {showAlert} = this.state;
     return(
         <View style={styles.container}>
-            <Header {...this.props} namePage="Nuevo evento"/> 
+            <View style={styles.containerHeader}> 
+                    <TouchableWithoutFeedback
+                        onPress={() => this._openDetail()}
+                    >
+                        <Icon
+                            style ={styles.iconHeader}
+                            name="angle-left"
+                            color= "white"
+                            size={20}
+                        />
+                    </TouchableWithoutFeedback>
+                        
+                    <Text style={styles.textHeader}>
+                        Editar Evento
+                    </Text>                    
+            </View>
             <View style={styles.formulario}>
                 <View style={[styles.form, {marginTop:10}]}>
                     <TextInput
-                        onSubmitEditing={Keyboard.dismiss}
                         style={styles.input}
-                        placeholder = {'Título evento'}
+                        value = {this.state.title}
                         multiline={true}
-                        placeholderTextColor = {'grey'}
                         underlineColorAndroid = {'transparent'}
                         keyboardType = 'default'
                         onChangeText={(value) => this.setState({title: value})}
@@ -181,9 +217,8 @@ export default class AddEventScreen extends React.Component {
                     <View style={{flexDirection: 'row',alignContent:'space-between'}}>
                         <Icon name="map-marker" size={28} color="gray" style={styles.icon3}/>
                         <TextInput
-                            onSubmitEditing={Keyboard.dismiss}
                             style={styles.input}
-                            placeholder = {'Lugar'}
+                            value={this.state.place}
                             multiline={true}
                             placeholderTextColor = {'gray'}
                             underlineColorAndroid = {'transparent'}
@@ -198,9 +233,8 @@ export default class AddEventScreen extends React.Component {
                 </View>
                 <View style={styles.form}>
                     <TextInput
-                        onSubmitEditing={Keyboard.dismiss}
                         style={styles.input}
-                        placeholder = {'Descripción'}
+                        value = {this.state.details}
                         multiline={true}
                         placeholderTextColor = {'gray'}
                         underlineColorAndroid = {'transparent'}
@@ -215,7 +249,7 @@ export default class AddEventScreen extends React.Component {
             </View>      
             <View style={styles.boton}>
                 <TouchableHighlight style={styles.bottom} onPress={() => this._validate()}>
-                    <Text style={styles.text}>Crear evento</Text>
+                    <Text style={styles.text}>Editar evento</Text>
                 </TouchableHighlight>
             </View>
             <AwesomeAlert
@@ -244,6 +278,13 @@ const styles = StyleSheet.create({
     flex:1,
     backgroundColor: 'white',
   },
+  containerHeader:{
+    backgroundColor:"#042e60",
+    height:70,
+    alignItems: 'center',
+    paddingTop: 20,
+    flexDirection: 'row',
+},
   formulario:{
     height:height*0.75,
     width:width,
@@ -271,10 +312,21 @@ input:{
     color:'#878787',
     maxHeight: 80
 },
+iconHeader: {
+    paddingHorizontal:15,
+},
   text:{
     fontSize:20,
     color:'white',
   },
+  textHeader:{
+    color:'white',
+    fontSize:18,
+    alignContent:'center',
+    alignItems:'center',
+    paddingLeft:width/2 -100,
+
+},
   icon: {
     position:'absolute',
     top:10,

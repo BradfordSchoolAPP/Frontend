@@ -101,8 +101,7 @@ export default class CreateNewScreen extends React.Component {
   }
 
   send(){
-    console.log("primero " + this.state.img_dir)
-    fetch('http://68.183.139.254/api/v1/news/', {
+    fetch('http://68.183.139.254/api/v1/news', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

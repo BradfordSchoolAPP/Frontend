@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,TouchableHighlight, TouchableWithoutFeedback, View, Button,Dimensions, ScrollView,Image} from 'react-native';
+import { StyleSheet, Text,TouchableHighlight,ActivityIndicator, TouchableWithoutFeedback, View, Button,Dimensions, ScrollView,Image} from 'react-native';
 
 import Header from '../components/Header'
 const {width,height} = Dimensions.get('window')
@@ -13,6 +13,7 @@ constructor(props) {
     this.state = {
         img_dir:'',
         data:null,
+        load:false,
         urlImages:[],
     }
 }   
@@ -37,12 +38,17 @@ formatDate(date) {
         const { navigation } = this.props;
         data = navigation.getParam('data', 'some default value');
         const imageRef = firebase.storage().ref('images/'+ data.img_dir + '/imagen0.jpg')
-        imageRef.getDownloadURL().then((url) => {
+        imageRef.getDownloadURL()
+        .then((url) => {
           this.setState({
             urlImages:this.state.urlImages.concat([url])
-          })   
+          })  
         
+        })
+        .then(()=> {
+            this.setState({load:true})
         });
+        
       }
       catch(error){
         console.log("aun no se obtiene la imagen")
@@ -54,6 +60,7 @@ formatDate(date) {
   render(){
     const { navigation } = this.props;
     data = navigation.getParam('data', 'some default value');
+
     return(
         <View style={styles.container}>
             <View style={styles.containerHeader}> 
@@ -77,8 +84,12 @@ formatDate(date) {
             </View>
 
             <ScrollView style={styles.container}>
+            {this.state.load ? 
+                <Image style={styles.image} source={{ uri: this.state.urlImages[0]  }} />
+                :
+                <ActivityIndicator size="large" color="#042e60" />
+            }
                 
-                <Image style={styles.image} source={{ uri: this.state.urlImages[0] }} />
                 <View style={styles.containerTitle}>
                     <Text style={styles.title}> {data.title}</Text>
                 </View>
