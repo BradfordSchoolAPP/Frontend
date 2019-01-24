@@ -39,7 +39,7 @@ export default class DetailEvent extends React.Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          id:this.props.navigation.getParam('id')
+            id:this.props.navigation.getParam('id')
         }),
       });
     }
@@ -55,6 +55,18 @@ export default class DetailEvent extends React.Component {
         })
     }
     
+
+    _openEdit(){
+        console.log("el titulo a editar es" + this.props.navigation.getParam('title'))
+        this.props.navigation.navigate('EditEvent',{
+            id: this.props.navigation.getParam('id'),
+            title: this.props.navigation.getParam('title'),
+            date: this.props.navigation.getParam('date'),
+            hour: this.props.navigation.getParam('hour'),
+            place: this.props.navigation.getParam('place'),
+            details: this.props.navigation.getParam('details')
+        })
+    }
 
 
   render(){
@@ -87,6 +99,7 @@ export default class DetailEvent extends React.Component {
                 <View style={styles.detailContainer}>
                     <View style={{ borderBottomColor: '#bbb',borderBottomWidth: StyleSheet.hairlineWidth,}}>
                         <Icon name="calendar" size={22} color="gray" style={styles.icon2}/>
+                        {console.log("voy a imprimir como se ve la fecha: "+ this.props.navigation.getParam('date', '...'))}
                         <Text style={styles.text}>{Moment(this.props.navigation.getParam('date', '...')).format('ddd DD')} de { Moment(this.props.navigation.getParam('date', '...')).format('MMMM, YYYY')}
                         </Text>
                     </View>

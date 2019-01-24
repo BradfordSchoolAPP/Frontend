@@ -18,8 +18,18 @@ import CreateNewScreen from '../screens/CreateNewScreen'
 import SendAlert from '../screens/SendAlert';
 import { createDrawerNavigator} from 'react-navigation';
 import NotificationsScreen from '../screens/NotificationsScreen';
+import AddBenefitScreen from '../screens/AddBenefitScreen';
 import ContactScreen from '../screens/ContactScreen';
 
+const AddBenefitStack = createStackNavigator({
+  AddBenefit:AddBenefitScreen,
+});
+
+AddBenefitStack.navigationOptions = {
+ navigationOptions: {
+   headerLeft: null
+ }
+};
 
 import Logout from '../components/Logout'
 
@@ -43,7 +53,6 @@ DetailEventStack.navigationOptions = {
     headerLeft:  null
   }
 };
-
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
@@ -176,6 +185,9 @@ export default MainTabNavigator= (admin) => createDrawerNavigator(
     },
     AddEvent:{
       screen: AddEventScreen,
+    },
+    AddBenefit:{
+      screen:AddBenefitScreen,
     },
     send:{
       screen: SendAlert,
