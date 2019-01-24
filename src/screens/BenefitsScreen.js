@@ -56,7 +56,7 @@ export default class BenefitsScreen extends React.Component {
           {this.state.json.map((item) => {
             console.log(item.id)
             return (
-                  <Benefit benefit={item}/>                     
+                  <Benefit benefit={item} navigation={this.props.navigation}/>                     
             )})
           }
           </ScrollView>
