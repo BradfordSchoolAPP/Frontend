@@ -13,8 +13,18 @@ import CreateNewScreen from '../screens/CreateNewScreen'
 import SendAlert from '../screens/SendAlert';
 import { createDrawerNavigator} from 'react-navigation';
 import NotificationsScreen from '../screens/NotificationsScreen';
+import AddBenefitScreen from '../screens/AddBenefitScreen';
 import ContactScreen from '../screens/ContactScreen';
 
+const AddBenefitStack = createStackNavigator({
+  AddBenefit:AddBenefitScreen,
+});
+
+AddBenefitStack.navigationOptions = {
+ navigationOptions: {
+   headerLeft: null
+ }
+};
 const AddEventStack = createStackNavigator({
   AddEvent:AddEventScreen,
 });
@@ -154,6 +164,9 @@ export default createDrawerNavigator(
     },
     AddEvent:{
       screen: AddEventScreen,
+    },
+    AddBenefit:{
+      screen:AddBenefitScreen,
     },
     send:{
       screen: SendAlert,

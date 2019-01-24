@@ -104,7 +104,7 @@ export default class EditEvent extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       headerleft: null,
-      drawerLabel: 'Crear Evento',
+      drawerLabel: 'Editar Evento',
       drawerIcon:  
       <Icon
         name="calendar-plus-o"

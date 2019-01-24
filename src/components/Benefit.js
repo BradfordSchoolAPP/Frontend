@@ -39,9 +39,18 @@ hideAlert = () => {
         showAlert: false
     });
 } 
-_openDetail(){
-    this.props.navigation.navigate('DetailEvent',{
-        benefit:this.props.benefit,
+_openEdit(){
+    console.log("quiero editar el" + this.props.benefit.id)
+    console.log(this.props.benefit.id)
+    console.log(this.props.benefit.name)
+    this.props.navigation.navigate('EditBenefit',{
+        id: this.props.benefit.id,
+        name: this.props.benefit.name,
+        details: this.props.benefit.details,
+        date: this.props.benefit.date,
+        deadline_date: this.props.benefit.deadline_date,
+        deadline_hour: this.props.benefit.deadline_hour,
+        requeriments:this.props.benefit.requeriments,
     })
 }
 delete(){
@@ -102,7 +111,7 @@ delete(){
                         <TouchableHighlight style= {[styles.buttom,{marginRight:5}]} onPress={() => this.showAlert()}>
                             <Text style= {{fontSize:18,color:'gray',alignSelf: 'center',textAlign: 'center'}}>Eliminar</Text>
                         </TouchableHighlight>
-                        <TouchableHighlight style= {[styles.buttom,{marginLeft:5}]} onPress={() => this.showAlert()}>
+                        <TouchableHighlight style= {[styles.buttom,{marginLeft:5}]} onPress={() => this._openEdit()}>
                             <Text style= {{fontSize:18,color:'gray',alignSelf: 'center',textAlign: 'center'}}>Editar</Text>
                         </TouchableHighlight>
                     </View>
