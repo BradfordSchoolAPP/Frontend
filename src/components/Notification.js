@@ -79,7 +79,7 @@ export default class Notification extends Component{
                     </View>
                     
                     <View style={styles.containerText}>
-                        <Text style={[styles.textTitle , this.props.data.opened ? styles.IsOld : styles.IsNew]}>{this.props.data.title}</Text>
+                        <Text style={[styles.textTitle , this.props.data.opened ? styles.IsOld : styles.IsNew]}>{this.props.data.title.replace(/\n|\r/g, "")}</Text>
                         <Text  style={styles.textDate}>{this.formatDate(new Date(this.props.data.date))}</Text>
                         
                     </View>

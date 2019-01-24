@@ -21,6 +21,7 @@ import NotificationsScreen from '../screens/NotificationsScreen';
 
 
 import Logout from '../components/Logout'
+import ContactScreen from '../screens/ContactScreen';
 
 const {width,height} = Dimensions.get('window')
 
@@ -151,6 +152,9 @@ export default MainTabParents= (admin) => createDrawerNavigator(
     },
     Benefits:{
       screen: BenefitsScreen,
+    },
+    contact:{
+      screen: ContactScreen,
     },
     noti:{
       screen: NotificationsScreen,

@@ -72,7 +72,7 @@ export default class NotificationsScreen extends React.Component {
     const user_id = await AsyncStorage.getItem('user_id').catch(e=> console.log(e))
     console.log(user_id)
 
-    return fetch('http://68.183.139.254/api/v1/alerts/' + 10)
+    return fetch('http://68.183.139.254/api/v1/alerts/' + user_id)
     .then( (response) => response.json() )
     .then( (responseJson ) => {
       this.setState({
