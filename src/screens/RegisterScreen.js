@@ -245,7 +245,7 @@ export default class RegisterScreen extends React.Component {
                             {this.props.navigation.navigate('Home')}
                         }
                         else if(this.state.option == 4){
-                            Linking.openURL('mailto:Bradford?subject=Solicitud de registro') 
+                            Linking.openURL('mailto:parents@Bradford.cl?subject=Solicitud de registro') 
                         }
                         
 					}}
