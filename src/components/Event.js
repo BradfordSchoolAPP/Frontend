@@ -7,6 +7,7 @@ import {
     TouchableWithoutFeedback,
     TouchableHighlight,
 } from 'react-native'
+import AppNavigator from '../navigation/AppNavigator';
 
 import Moment from 'moment';
 import 'moment/locale/es'
@@ -19,16 +20,16 @@ export default class Event extends Component{
     constructor(props){
         super(props)
     }
-_openDetail(){
-    this.props.navigation.navigate('DetailEvent',{
-        id: this.props.id,
-        title: this.props.title,
-        date: this.props.date,
-        hour: this.props.hour,
-        place: this.props.place,
-        details: this.props.details
-    })
-}
+    _openDetail(){
+        this.props.navigation.navigate('DetailEvent',{
+            id: this.props.id,
+            title: this.props.title,
+            date: this.props.date,
+            hour: this.props.hour,
+            place: this.props.place,
+            details: this.props.details
+        })
+    }
     render(){
         Moment.locale('es')
         console.log(this.props.id)

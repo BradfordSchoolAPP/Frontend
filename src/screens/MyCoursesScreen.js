@@ -175,7 +175,8 @@ componentDidMount() {
             <Text style={{marginBottom:height*0.01, fontSize:23, color: "#29a184"}}>Alumnos</Text>
             <ScrollView>
                 {this.state.schoolmates.map((item) => {
-                  return (
+                  if(item.name !== this.state.student){
+                    return (
                       <TouchableHighlight underlayColor="transparent" key={item.name}
                             style={styles.containerSchoolmates} 
                             onPress={() => {this.getParents(item.id,item.name); this.setState({modalVisible: true})}}
@@ -188,6 +189,8 @@ componentDidMount() {
                           </View>
                       </TouchableHighlight>                   
                   )
+                  }
+                  
               })}
             </ScrollView>
             <Modal isVisible={this.state.modalVisible}

@@ -33,22 +33,7 @@ export default class EventsScreen extends React.Component {
       place: '',
       date:'',
       hour:'',
-      /*json:[
-        {
-          title:'Bingo a beneficio',
-          detail:'Centro de estudiantes realiza un bingo a beneficio para compañeros',
-          place:'Diinf',
-          date:'2018-12-25',
-          hour:'20:00'
-        },
-        {
-          title:'Fin semestre',
-          detail:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur efficitur ornare congue. Vivamus faucibus, urna et mattis maximus, ante lacus luctus sapien, sit amet feugiat metus tellus ac ligula. Phasellus mattis rutrum mattis. Suspendisse potenti. Nam laoreet imperdiet purus, et pulvinar dolor tincidunt id',
-          place:'Universidad de Santiago',
-          date:'2018-11-02',
-          hour:'15:30'
-        }],*/
-        json:[],
+      json:[],
     }
   }
   componentDidMount() {

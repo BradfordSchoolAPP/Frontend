@@ -66,6 +66,21 @@ delete(){
   });
   {this.props.deleteCallback()}
 }
+
+admin(){
+    if(this.props.user_type==='1'){
+        return(
+            <View  style={[styles.center,{flexDirection:"row",marginTop:20}]}>
+                <TouchableHighlight style= {[styles.buttom,{marginRight:5}]} onPress={() => this.showAlert()}>
+                            <Text style= {{fontSize:18,color:'gray',alignSelf: 'center',textAlign: 'center'}}>Eliminar</Text>
+                        </TouchableHighlight>
+                        <TouchableHighlight style= {[styles.buttom,{marginLeft:5}]} onPress={() => this._openEdit()}>
+                            <Text style= {{fontSize:18,color:'gray',alignSelf: 'center',textAlign: 'center'}}>Editar</Text>
+                        </TouchableHighlight>
+            </View>
+        )
+    }
+}
     render(){
         Moment.locale('es')
         const {showAlert} = this.state;
@@ -108,14 +123,7 @@ delete(){
                             <Text style={{marginHorizontal:15,fontSize:20,color:'gray'}}>- {item}</Text>
                         )
                     })}
-                    <View  style={[styles.center,{flexDirection:"row",marginTop:20}]}>
-                        <TouchableHighlight style= {[styles.buttom,{marginRight:5}]} onPress={() => this.showAlert()}>
-                            <Text style= {{fontSize:18,color:'gray',alignSelf: 'center',textAlign: 'center'}}>Eliminar</Text>
-                        </TouchableHighlight>
-                        <TouchableHighlight style= {[styles.buttom,{marginLeft:5}]} onPress={() => this._openEdit()}>
-                            <Text style= {{fontSize:18,color:'gray',alignSelf: 'center',textAlign: 'center'}}>Editar</Text>
-                        </TouchableHighlight>
-                    </View>
+                        {this.admin()}    
                 </View>
             </View>
             <AwesomeAlert
