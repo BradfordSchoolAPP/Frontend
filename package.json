@@ -9,7 +9,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "^30.0.1",
+    "expo": "^46.0.14",
     "expo-cli": "^2.3.8",
     "moment": "^2.22.2",
     "firebase": "^5.5.8",
